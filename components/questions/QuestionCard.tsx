@@ -25,21 +25,22 @@ export function QuestionCard({
 }) {
   return (
     <article
+      className="question-card"
       style={{
         background: "#fff",
-        border: "1.5px solid #e5e7eb",
-        borderRadius: 18,
-        padding: "clamp(20px, 4vw, 34px)",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+        border: "1px solid #e3e8ef",
+        borderRadius: 14,
+        padding: 18,
+        boxShadow: "0 1px 10px rgba(15,23,42,0.045)",
       }}
     >
-      <header style={{ borderBottom: "1px solid #f3f4f6", paddingBottom: 18, marginBottom: 24 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 14 }}>
-          <span style={{ fontSize: 13, fontWeight: 800, color: "#2563eb" }}>
+      <header style={{ borderBottom: "1px solid #f1f4f8", paddingBottom: 10, marginBottom: 12 }}>
+        <div className="question-card-meta" style={{ display: "flex", justifyContent: "space-between", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
+          <span style={{ fontSize: 11, fontWeight: 750, color: "#2563eb", lineHeight: 1.4 }}>
             Questao {currentIndex + 1} de {total}
           </span>
-          <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-            <span style={{ fontSize: 13, color: "#6b7280" }}>
+          <div className="question-card-actions" style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+            <span style={{ fontSize: 11, color: "#7b8494", lineHeight: 1.4 }}>
               {question.banca} - {question.ano}
             </span>
             <button
@@ -47,13 +48,14 @@ export function QuestionCard({
               onClick={onToggleFavorite}
               aria-pressed={isFavorite}
               style={{
-                border: `1.5px solid ${isFavorite ? "#f59e0b" : "#e5e7eb"}`,
-                background: isFavorite ? "rgba(245,158,11,0.12)" : "#fff",
+                border: `1px solid ${isFavorite ? "rgba(245,158,11,0.5)" : "#e3e8ef"}`,
+                background: isFavorite ? "rgba(245,158,11,0.10)" : "#fbfdff",
                 color: isFavorite ? "#92400e" : "#6b7280",
                 borderRadius: 980,
-                padding: "7px 12px",
-                fontSize: 13,
-                fontWeight: 800,
+                minHeight: 30,
+                padding: "5px 10px",
+                fontSize: 12,
+                fontWeight: 700,
                 cursor: "pointer",
               }}
             >
@@ -61,17 +63,17 @@ export function QuestionCard({
             </button>
           </div>
         </div>
-        <h1 style={{ fontSize: "clamp(22px, 4vw, 34px)", lineHeight: 1.18, letterSpacing: "-0.8px", color: "#111827", margin: "0 0 14px", fontWeight: 850 }}>
+        <h1 className="question-card-title" style={{ fontSize: 18, lineHeight: 1.25, letterSpacing: 0, color: "#111827", margin: "0 0 4px", fontWeight: 780 }}>
           {getSubjectDisplayName(question.materia)}
         </h1>
-        <p style={{ fontSize: 14, color: "#6b7280", lineHeight: 1.55, margin: 0 }}>{question.topico}</p>
+        <p className="question-card-topic" style={{ fontSize: 12, color: "#7b8494", lineHeight: 1.45, margin: 0 }}>{question.topico}</p>
       </header>
 
-      <p style={{ fontSize: 17, lineHeight: 1.75, color: "#1f2937", margin: "0 0 22px", whiteSpace: "pre-wrap" }}>
+      <p className="question-card-enunciation" style={{ fontSize: 14, fontWeight: 400, lineHeight: 1.62, color: "#1f2937", margin: "0 0 12px", whiteSpace: "pre-wrap" }}>
         {question.enunciado}
       </p>
 
-      <div style={{ display: "grid", gap: 10 }}>
+      <div style={{ display: "grid", gap: 6 }}>
         {ALTERNATIVE_KEYS.map((key) => (
           <button
             key={key}
@@ -82,26 +84,52 @@ export function QuestionCard({
           >
             <span
               style={{
-                width: 30,
-                height: 30,
+                width: 26,
+                height: 26,
                 borderRadius: "50%",
-                border: "1.5px solid currentColor",
+                border: "1px solid currentColor",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flexShrink: 0,
-                fontSize: 13,
-                fontWeight: 850,
+                fontSize: 12,
+                fontWeight: 750,
               }}
             >
               {key}
             </span>
-            <span style={{ lineHeight: 1.55 }}>{question.alternativas[key]}</span>
+            <span style={{ lineHeight: 1.55, minWidth: 0 }}>{question.alternativas[key]}</span>
           </button>
         ))}
       </div>
 
       {selectedAnswer && <AnswerFeedback question={question} selectedAnswer={selectedAnswer} />}
+
+      <style>{`
+        @media (max-width: 640px) {
+          .question-card {
+            border-radius: 14px !important;
+            padding: 14px 12px !important;
+          }
+          .question-card-meta,
+          .question-card-actions {
+            align-items: flex-start !important;
+          }
+          .question-card-actions {
+            width: 100%;
+            justify-content: space-between !important;
+          }
+          .question-card-title {
+            font-size: 17px !important;
+            line-height: 1.24 !important;
+          }
+          .question-card-enunciation {
+            font-size: 14px !important;
+            line-height: 1.56 !important;
+            margin-bottom: 12px !important;
+          }
+        }
+      `}</style>
     </article>
   );
 }
@@ -121,18 +149,19 @@ function getAlternativeStyle({
 
   return {
     width: "100%",
-    minHeight: 58,
+    minHeight: 46,
     display: "flex",
     alignItems: "flex-start",
-    gap: 12,
+    gap: 10,
     textAlign: "left",
-    border: `1.5px solid ${isCorrect ? "#16a34a" : isWrongSelection ? "#dc2626" : "#e5e7eb"}`,
-    background: isCorrect ? "rgba(22,163,74,0.08)" : isWrongSelection ? "rgba(220,38,38,0.07)" : "#fff",
+    border: `1px solid ${isCorrect ? "rgba(22,163,74,0.58)" : isWrongSelection ? "rgba(220,38,38,0.55)" : "#e4e9f1"}`,
+    background: isCorrect ? "rgba(22,163,74,0.075)" : isWrongSelection ? "rgba(220,38,38,0.065)" : "#fbfdff",
     color: isCorrect ? "#166534" : isWrongSelection ? "#991b1b" : "#374151",
-    borderRadius: 14,
-    padding: "14px 16px",
-    fontSize: 15,
-    fontWeight: 600,
+    borderRadius: 12,
+    padding: "9px 12px",
+    fontSize: 14,
+    fontWeight: isCorrect || isWrongSelection ? 600 : 400,
     cursor: answered ? "default" : "pointer",
+    overflowWrap: "anywhere",
   };
 }

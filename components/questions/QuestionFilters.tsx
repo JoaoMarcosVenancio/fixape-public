@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { getSubjectDisplayName } from "@/lib/questions/display";
 
 type FilterValue = {
@@ -29,19 +30,77 @@ export function QuestionFilters({
     onChange({ ...value, [key]: nextValue, ...(key === "subject" ? { topic: "" } : {}) });
   }
 
+  const [open, setOpen] = useState(false);
+  const activeCount = [value.subject, value.topic, value.board, value.year, value.status].filter(Boolean).length;
+
   return (
     <section
+      className="question-filters"
       style={{
-        background: "#fff",
-        border: "1.5px solid #e5e7eb",
-        borderRadius: 16,
-        padding: 16,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+        background: "rgba(255,255,255,0.82)",
+        border: "1px solid #e6ebf2",
+        borderRadius: 12,
+        padding: "10px 12px 12px",
+        boxShadow: "0 1px 4px rgba(15,23,42,0.035)",
       }}
     >
-      <div className="question-filter-grid" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.35fr) minmax(0, 1.35fr) 0.8fr 0.8fr 0.9fr", gap: 12 }}>
-        <label style={{ display: "grid", gap: 6 }}>
-          <span style={{ fontSize: 12, fontWeight: 750, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+      <button
+        type="button"
+        className="question-filter-toggle"
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
+        style={{
+          width: "100%",
+          minHeight: 46,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+          border: "none",
+          background: "transparent",
+          color: "#111827",
+          padding: 0,
+          cursor: "pointer",
+          textAlign: "left",
+        }}
+      >
+        <span style={{ display: "grid", gap: 2 }}>
+          <strong style={{ fontSize: 14, fontWeight: 780 }}>Filtros</strong>
+          <span style={{ fontSize: 12, color: "#6b7280" }}>
+            {activeCount > 0 ? `${activeCount} filtro${activeCount === 1 ? "" : "s"} ativo${activeCount === 1 ? "" : "s"}` : "Todas as questoes"}
+          </span>
+        </span>
+        <span
+          aria-hidden="true"
+          style={{
+            width: 30,
+            height: 30,
+            borderRadius: 999,
+            border: "1px solid #dbe3f0",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#2563eb",
+            fontWeight: 750,
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.18s ease",
+          }}
+        >
+          v
+        </span>
+      </button>
+
+      <div
+        className={`question-filter-grid ${open ? "is-open" : ""}`}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1.35fr) minmax(0, 1.35fr) 0.8fr 0.8fr 0.9fr",
+          gap: 9,
+          marginTop: 0,
+        }}
+      >
+        <label style={{ display: "grid", gap: 5 }}>
+          <span style={filterLabelStyle}>
             Materia
           </span>
           <select value={value.subject} onChange={(event) => updateFilter("subject", event.target.value)} style={selectStyle}>
@@ -54,8 +113,8 @@ export function QuestionFilters({
           </select>
         </label>
 
-        <label style={{ display: "grid", gap: 6 }}>
-          <span style={{ fontSize: 12, fontWeight: 750, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+        <label style={{ display: "grid", gap: 5 }}>
+          <span style={filterLabelStyle}>
             Topico
           </span>
           <select
@@ -73,8 +132,8 @@ export function QuestionFilters({
           </select>
         </label>
 
-        <label style={{ display: "grid", gap: 6 }}>
-          <span style={{ fontSize: 12, fontWeight: 750, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+        <label style={{ display: "grid", gap: 5 }}>
+          <span style={filterLabelStyle}>
             Banca
           </span>
           <select value={value.board} onChange={(event) => updateFilter("board", event.target.value)} style={selectStyle}>
@@ -87,8 +146,8 @@ export function QuestionFilters({
           </select>
         </label>
 
-        <label style={{ display: "grid", gap: 6 }}>
-          <span style={{ fontSize: 12, fontWeight: 750, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+        <label style={{ display: "grid", gap: 5 }}>
+          <span style={filterLabelStyle}>
             Ano
           </span>
           <select value={value.year} onChange={(event) => updateFilter("year", event.target.value)} style={selectStyle}>
@@ -101,8 +160,8 @@ export function QuestionFilters({
           </select>
         </label>
 
-        <label style={{ display: "grid", gap: 6 }}>
-          <span style={{ fontSize: 12, fontWeight: 750, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+        <label style={{ display: "grid", gap: 5 }}>
+          <span style={filterLabelStyle}>
             Status
           </span>
           <select value={value.status} onChange={(event) => updateFilter("status", event.target.value)} style={selectStyle}>
@@ -116,8 +175,13 @@ export function QuestionFilters({
       </div>
 
       <style>{`
+        .question-filter-toggle { display: none !important; }
         @media (max-width: 720px) {
+          .question-filters { padding: 9px 10px !important; }
+          .question-filter-toggle { display: flex !important; }
           .question-filter-grid { grid-template-columns: 1fr !important; }
+          .question-filter-grid:not(.is-open) { display: none !important; }
+          .question-filter-grid.is-open { margin-top: 9px !important; }
         }
       `}</style>
     </section>
@@ -126,11 +190,19 @@ export function QuestionFilters({
 
 const selectStyle: React.CSSProperties = {
   width: "100%",
-  minHeight: 44,
-  border: "1.5px solid #e5e7eb",
-  borderRadius: 10,
-  background: "#fff",
-  color: "#111827",
-  fontSize: 14,
-  padding: "0 12px",
+  minHeight: 38,
+  border: "1px solid #e3e8ef",
+  borderRadius: 9,
+  background: "#fbfdff",
+  color: "#1f2937",
+  fontSize: 13,
+  padding: "0 10px",
+};
+
+const filterLabelStyle: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 700,
+  color: "#7b8494",
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
 };

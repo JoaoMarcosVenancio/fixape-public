@@ -10,33 +10,42 @@ export function AnswerFeedback({
   selectedAnswer: AlternativeKey;
 }) {
   const isCorrect = selectedAnswer === question.gabarito;
-  const comentario = question.comentario.trim() || "Comentário indisponível no momento.";
+  const comentario = question.comentario?.trim();
 
   return (
     <section
       aria-live="polite"
+      className="answer-feedback"
       style={{
-        border: `1.5px solid ${isCorrect ? "rgba(22,163,74,0.35)" : "rgba(220,38,38,0.32)"}`,
-        background: isCorrect ? "rgba(22,163,74,0.07)" : "rgba(220,38,38,0.06)",
-        borderRadius: 14,
-        padding: "18px 18px",
-        marginTop: 20,
+        border: `1px solid ${isCorrect ? "rgba(22,163,74,0.34)" : "rgba(220,38,38,0.30)"}`,
+        background: isCorrect ? "rgba(22,163,74,0.055)" : "rgba(220,38,38,0.05)",
+        borderRadius: 10,
+        padding: 11,
+        marginTop: 11,
       }}
     >
       <div
         style={{
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: 800,
-          color: isCorrect ? "#15803d" : "#b91c1c",
-          marginBottom: 8,
+          color: isCorrect ? "#166534" : "#991b1b",
+          marginBottom: 4,
         }}
       >
         {isCorrect ? "Resposta correta" : "Resposta errada"}
       </div>
-      <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.65, margin: "0 0 10px" }}>
+      <p style={{ fontSize: 13, color: "#374151", lineHeight: 1.45, margin: comentario ? "0 0 4px" : 0 }}>
         Gabarito: <strong>{question.gabarito}</strong>
       </p>
-      <p style={{ fontSize: 14, color: "#4b5563", lineHeight: 1.7, margin: 0 }}>{comentario}</p>
+      {comentario && <p style={{ fontSize: 13, color: "#566170", lineHeight: 1.5, margin: 0 }}>Comentario: {comentario}</p>}
+      <style>{`
+        @media (max-width: 640px) {
+          .answer-feedback {
+            padding: 10px !important;
+            margin-top: 10px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

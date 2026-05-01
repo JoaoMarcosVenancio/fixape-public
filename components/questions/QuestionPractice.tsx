@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { getSubjectDisplayName } from "@/lib/questions/display";
 import { getOfficialTopicsForSubject } from "@/lib/questions/edital-topics";
 import { getQuestionTopicFilterValue } from "@/lib/questions/topic-mapping";
 import { buildQuestionsUrl } from "@/lib/questions/urls";
@@ -28,28 +27,20 @@ const EMPTY_FILTERS: FilterValue = {
   status: "",
 };
 
-const STATUS_COPY: Record<string, { title: string; description: string; emptyTitle: string; emptyDescription: string }> = {
+const STATUS_COPY: Record<string, { emptyTitle: string; emptyDescription: string }> = {
   wrong: {
-    title: "Revisao de erros",
-    description: "Voce esta revisando questoes que respondeu incorretamente.",
     emptyTitle: "Voce ainda nao tem questoes erradas para revisar.",
     emptyDescription: "Continue praticando. Quando errar uma questao, ela aparecera aqui.",
   },
   favorites: {
-    title: "Questoes favoritas",
-    description: "Voce esta estudando as questoes que marcou como favoritas.",
     emptyTitle: "Voce ainda nao marcou nenhuma questao como favorita.",
     emptyDescription: "Use o botao Favoritar em uma questao para montar sua lista de revisao.",
   },
   answered: {
-    title: "Questoes respondidas",
-    description: "Voce esta vendo questoes que ja foram respondidas neste navegador.",
     emptyTitle: "Voce ainda nao respondeu questoes com esses filtros.",
     emptyDescription: "Volte para todas as questoes e comece uma sessao de pratica.",
   },
   unanswered: {
-    title: "Questoes nao respondidas",
-    description: "Voce esta praticando questoes ainda nao respondidas neste navegador.",
     emptyTitle: "Nao ha questoes nao respondidas com os filtros atuais.",
     emptyDescription: "Limpe os filtros ou escolha outra materia, banca ou ano.",
   },
@@ -86,8 +77,6 @@ function filterQuestions(questions: SoldadoQuestion[], filters: FilterValue, pro
 function getModeCopy(status: string) {
   return (
     STATUS_COPY[status] ?? {
-      title: "Pratica direta com progresso local",
-      description: "Suas respostas e favoritas ficam salvas somente neste navegador, sem login e sem envio para servidor.",
       emptyTitle: "Nenhuma questao encontrada com os filtros atuais.",
       emptyDescription: "Limpe os filtros ou ajuste materia, banca, ano e status para continuar praticando.",
     }
@@ -213,57 +202,29 @@ export function QuestionPractice({
 
   return (
     <main style={{ background: "#f8faff", minHeight: "100vh" }}>
-      <section style={{ background: "#fff", borderBottom: "1px solid #e8edf8", padding: "56px 24px 34px" }}>
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
-          <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2563eb", margin: "0 0 12px" }}>
-            Questoes PMPE Soldado
-          </p>
-          <h1 style={{ fontSize: "clamp(32px, 6vw, 56px)", lineHeight: 1.08, letterSpacing: "-1.8px", color: "#111827", margin: "0 0 16px", fontWeight: 850 }}>
-            {modeCopy.title}
-          </h1>
-          <p style={{ fontSize: 17, color: "#6b7280", lineHeight: 1.65, maxWidth: 700, margin: 0 }}>
-            {modeCopy.description}
-          </p>
-        </div>
-      </section>
-
-      <section style={{ padding: "22px 24px 88px" }}>
-        <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 18 }}>
+      <section className="practice-body" style={{ padding: "16px 24px 72px" }}>
+        <div className="practice-content" style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 12 }}>
           <QuestionFilters subjects={subjects} topics={topicOptions} boards={boards} years={years} value={filters} onChange={handleFilterChange} />
 
-          <section style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "16px 18px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-              <div>
-                <strong style={{ display: "block", fontSize: 15, color: "#111827", marginBottom: 4 }}>
-                  {filteredQuestions.length} questoes no filtro atual
-                </strong>
-                <span style={{ fontSize: 13, color: "#6b7280" }}>
-                  {filters.subject ? `Materia: ${getSubjectDisplayName(filters.subject)}. ` : ""}
-                  {filters.topic ? `Topico: ${filters.topic}. ` : ""}
-                  {filters.board ? `Banca: ${filters.board}. ` : ""}
-                  {filters.year ? `Ano: ${filters.year}. ` : ""}
-                  {filters.status ? `Modo: ${modeCopy.title}.` : "Modo: todas as questoes."}
-                </span>
-              </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                {canContinueFromLast && (
-                  <button type="button" onClick={continueFromLastQuestion} style={secondaryButtonStyle}>
-                    Continuar de onde parei
-                  </button>
-                )}
-                {filters.topic && (
-                  <button type="button" onClick={() => handleFilterChange({ ...filters, topic: "" })} style={secondaryButtonStyle}>
-                    Limpar topico
-                  </button>
-                )}
-                {hasActiveFilters && (
-                  <button type="button" onClick={clearFilters} style={secondaryButtonStyle}>
-                    Limpar filtros
-                  </button>
-                )}
-              </div>
+          {(canContinueFromLast || filters.topic || hasActiveFilters) && (
+            <div className="practice-filter-actions" style={{ display: "flex", justifyContent: "flex-end", gap: 8, flexWrap: "wrap" }}>
+              {canContinueFromLast && (
+                <button type="button" onClick={continueFromLastQuestion} style={secondaryButtonStyle}>
+                  Continuar de onde parei
+                </button>
+              )}
+              {filters.topic && (
+                <button type="button" onClick={() => handleFilterChange({ ...filters, topic: "" })} style={secondaryButtonStyle}>
+                  Limpar topico
+                </button>
+              )}
+              {hasActiveFilters && (
+                <button type="button" onClick={clearFilters} style={secondaryButtonStyle}>
+                  Limpar filtros
+                </button>
+              )}
             </div>
-          </section>
+          )}
 
           {ready && currentQuestion ? (
             <>
@@ -319,6 +280,24 @@ export function QuestionPractice({
           )}
         </div>
       </section>
+      <style>{`
+        @media (max-width: 640px) {
+          .practice-body {
+            padding: 8px 8px 52px !important;
+          }
+          .practice-content {
+            gap: 8px !important;
+          }
+          .practice-filter-actions {
+            display: grid !important;
+            grid-template-columns: 1fr;
+            width: 100%;
+          }
+          .practice-filter-actions button {
+            width: 100%;
+          }
+        }
+      `}</style>
     </main>
   );
 }
@@ -328,7 +307,8 @@ const secondaryButtonStyle: React.CSSProperties = {
   background: "#fff",
   color: "#374151",
   borderRadius: 980,
-  padding: "9px 16px",
+  minHeight: 38,
+  padding: "8px 14px",
   fontSize: 13,
   fontWeight: 750,
   cursor: "pointer",
@@ -339,6 +319,7 @@ const primaryButtonStyle: React.CSSProperties = {
   background: "linear-gradient(135deg,#2563eb,#3b82f6)",
   color: "#fff",
   borderRadius: 980,
+  minHeight: 46,
   padding: "12px 22px",
   fontSize: 14,
   fontWeight: 800,

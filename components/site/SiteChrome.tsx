@@ -21,6 +21,7 @@ export function SiteHeader() {
       }}
     >
       <div
+        className="site-header-inner"
         style={{
           maxWidth: 1120,
           margin: "0 auto",
@@ -55,17 +56,15 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap", justifyContent: "flex-end" }}>
-          <Link href="/soldado-pmpe" style={linkStyle}>
-            Soldado
-          </Link>
-          <Link href="/blog" style={linkStyle}>
+        <div className="site-header-links" style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <Link className="site-header-blog" href="/blog" style={linkStyle}>
             Blog
           </Link>
           <Link href="/progresso" style={linkStyle}>
             Progresso
           </Link>
           <Link
+            className="site-header-cta"
             href="/questoes"
             style={{
               fontSize: 14,
@@ -78,10 +77,27 @@ export function SiteHeader() {
               boxShadow: "0 8px 20px rgba(37,99,235,0.24)",
             }}
           >
-            Comecar questoes
+            Come&ccedil;ar quest&otilde;es
           </Link>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .site-header-inner {
+            min-height: 48px !important;
+            padding: 0 14px !important;
+            gap: 12px !important;
+          }
+          .site-header-links {
+            gap: 0 !important;
+            flex-wrap: nowrap !important;
+          }
+          .site-header-blog,
+          .site-header-cta {
+            display: none !important;
+          }
+        }
+      `}</style>
     </nav>
   );
 }

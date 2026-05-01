@@ -29,23 +29,23 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
 
   return (
     <main style={{ background: "#f8faff", minHeight: "100vh" }}>
-      <section style={{ background: "#fff", borderBottom: "1px solid #e8edf8", padding: "56px 24px 34px" }}>
+      <section className="progress-hero" style={{ background: "#fff", borderBottom: "1px solid #e8edf8", padding: "48px 24px 30px" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2563eb", margin: "0 0 12px" }}>
             Progresso PMPE Soldado
           </p>
-          <h1 style={{ fontSize: "clamp(32px, 6vw, 56px)", lineHeight: 1.08, letterSpacing: "-1.8px", color: "#111827", margin: "0 0 16px", fontWeight: 850 }}>
+          <h1 className="progress-title" style={{ fontSize: 48, lineHeight: 1.08, letterSpacing: 0, color: "#111827", margin: "0 0 16px", fontWeight: 850 }}>
             Seu desempenho neste navegador.
           </h1>
-          <p style={{ fontSize: 17, color: "#6b7280", lineHeight: 1.65, maxWidth: 700, margin: 0 }}>
+          <p className="progress-description" style={{ fontSize: 17, color: "#6b7280", lineHeight: 1.65, maxWidth: 700, margin: 0 }}>
             As informacoes abaixo ficam salvas em localStorage. Nao ha login, servidor ou sincronizacao nesta versao estatica.
           </p>
         </div>
       </section>
 
-      <section style={{ padding: "24px 24px 88px" }}>
+      <section className="progress-body" style={{ padding: "24px 24px 88px" }}>
         <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 18 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 14 }}>
+          <div className="progress-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 14 }}>
             {[
               ["Respondidas", stats.totalAnswered],
               ["Acertos", stats.totalCorrect],
@@ -60,8 +60,8 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
             ))}
           </div>
 
-          <section style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: 18, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <section className="progress-actions-card" style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: 18, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+            <div className="progress-actions" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <Link href={buildQuestionsUrl()} style={primaryLinkStyle}>
                 Continuar questoes
               </Link>
@@ -77,9 +77,9 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
             </div>
           </section>
 
-          <section style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "26px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+          <section className="progress-subjects-card" style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "26px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
             <h2 style={{ fontSize: 20, fontWeight: 850, color: "#111827", margin: "0 0 18px" }}>Progresso por materia</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
+            <div className="progress-subject-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
               {bySubject.map((subject) => (
                 <article key={subject.subject} style={{ border: "1.5px solid #e5e7eb", borderRadius: 14, padding: 16 }}>
                   <h3 style={{ fontSize: 16, fontWeight: 850, color: "#111827", margin: "0 0 12px", lineHeight: 1.35 }}>
@@ -104,7 +104,7 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
                       }}
                     />
                   </div>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
+                  <div className="progress-subject-actions" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
                     <Link href={buildQuestionsUrl({ materia: subject.subject })} style={smallLinkStyle}>
                       Estudar materia
                     </Link>
@@ -121,6 +121,47 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
           </section>
         </div>
       </section>
+      <style>{`
+        @media (max-width: 640px) {
+          .progress-hero {
+            padding: 32px 16px 24px !important;
+          }
+          .progress-title {
+            font-size: 32px !important;
+            line-height: 1.14 !important;
+          }
+          .progress-description {
+            font-size: 15px !important;
+            line-height: 1.6 !important;
+          }
+          .progress-body {
+            padding: 14px 12px 72px !important;
+          }
+          .progress-metrics {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 10px !important;
+          }
+          .progress-actions-card,
+          .progress-subjects-card {
+            padding: 16px !important;
+            border-radius: 14px !important;
+          }
+          .progress-actions,
+          .progress-subject-actions {
+            display: grid !important;
+            grid-template-columns: 1fr;
+            width: 100%;
+          }
+          .progress-actions a,
+          .progress-actions button,
+          .progress-subject-actions a {
+            width: 100%;
+          }
+          .progress-subject-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
@@ -138,7 +179,7 @@ const metricCardStyle: React.CSSProperties = {
   background: "#fff",
   border: "1.5px solid #e5e7eb",
   borderRadius: 16,
-  padding: "22px 24px",
+  padding: "20px 18px",
   boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
 };
 
@@ -146,7 +187,7 @@ const primaryLinkStyle: React.CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  minHeight: 42,
+  minHeight: 48,
   color: "#fff",
   background: "linear-gradient(135deg,#2563eb,#3b82f6)",
   borderRadius: 980,
@@ -164,7 +205,7 @@ const secondaryLinkStyle: React.CSSProperties = {
 };
 
 const dangerButtonStyle: React.CSSProperties = {
-  minHeight: 42,
+  minHeight: 48,
   color: "#b91c1c",
   background: "#fff",
   border: "1.5px solid rgba(220,38,38,0.28)",
@@ -179,7 +220,7 @@ const smallLinkStyle: React.CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  minHeight: 34,
+  minHeight: 40,
   color: "#2563eb",
   background: "#fff",
   border: "1.5px solid rgba(37,99,235,0.24)",
