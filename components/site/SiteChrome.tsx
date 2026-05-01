@@ -59,14 +59,14 @@ export function SiteHeader() {
           <Link href="/soldado-pmpe" style={linkStyle}>
             Soldado
           </Link>
-          <Link href="/oficial-pmpe" style={linkStyle}>
-            Oficial
-          </Link>
           <Link href="/blog" style={linkStyle}>
             Blog
           </Link>
+          <Link href="/progresso" style={linkStyle}>
+            Progresso
+          </Link>
           <Link
-            href="/#download"
+            href="/questoes"
             style={{
               fontSize: 14,
               fontWeight: 700,
@@ -78,7 +78,7 @@ export function SiteHeader() {
               boxShadow: "0 8px 20px rgba(37,99,235,0.24)",
             }}
           >
-            Google Play
+            Comecar questoes
           </Link>
         </div>
       </div>
@@ -101,11 +101,14 @@ export function SiteFooter() {
         }}
       >
         <p style={{ fontSize: 13, color: "#9ca3af", margin: 0 }}>
-          FixaPE - PMPE no Android - {new Date().getFullYear()}
+          FixaPE - PMPE Soldado na web - {new Date().getFullYear()}
         </p>
         <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
           <Link href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Blog
+          </Link>
+          <Link href="/progresso" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+            Progresso
           </Link>
           <Link href="/privacidade" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Privacidade
@@ -128,4 +131,3 @@ export function StaticPageShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-

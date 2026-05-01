@@ -11,12 +11,12 @@ export default function TermosPage() {
           Termos de Uso
         </h1>
         <p style={{ fontSize: 17, color: "#6b7280", lineHeight: 1.75, margin: "0 0 34px" }}>
-          Estes termos iniciais posicionam o FixaPE como site informativo e app de estudo em preparação. A versão final será revisada antes do lançamento público.
+          Estes termos iniciais posicionam o FixaPE como uma plataforma web estatica para estudo de PMPE Soldado. A versao final sera revisada antes do lancamento publico do fluxo de questoes.
         </p>
         {[
-          ["Uso do site", "O website apresenta informações sobre o FixaPE, páginas institucionais e conteúdo de blog sobre preparação para PMPE."],
-          ["Conteúdo educacional", "Materiais e textos têm finalidade educacional e informativa. O candidato deve sempre consultar editais e fontes oficiais."],
-          ["Aplicativo", "As funcionalidades operacionais de estudo, conta e progresso pertencem ao app Android e ao backend associado, não ao site estático."],
+          ["Uso do site", "O website apresenta informacoes sobre o FixaPE, paginas institucionais, blog e a futura experiencia de questoes gratuitas para PMPE Soldado."],
+          ["Conteudo educacional", "Materiais e textos tem finalidade educacional e informativa. O candidato deve sempre consultar editais e fontes oficiais."],
+          ["Plataforma web", "Nesta etapa, o FixaPE nao usa login, pagamento, backend ou banco de dados. Funcionalidades de pratica serao adicionadas de forma estatica e local."],
         ].map(([title, text]) => (
           <section key={title} style={{ background: "#f8faff", border: "1px solid #e8edf8", borderRadius: 18, padding: "24px 26px", marginBottom: 14 }}>
             <h2 style={{ fontSize: 18, fontWeight: 800, color: "#111827", margin: "0 0 8px" }}>{title}</h2>
@@ -27,4 +27,3 @@ export default function TermosPage() {
     </StaticPageShell>
   );
 }
-

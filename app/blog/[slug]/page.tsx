@@ -192,14 +192,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             >
               <div>
                 <div style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 4 }}>
-                  Estude PMPE pelo app Android
+                  Estude PMPE Soldado na web
                 </div>
                 <div style={{ fontSize: 14, color: "#6b7280" }}>
-                  O FixaPE vai concentrar questões, progresso e revisão de erros no celular.
+                  O FixaPE esta sendo preparado para concentrar questoes gratuitas, progresso e revisao de erros no navegador.
                 </div>
               </div>
               <Link
-                href="/#download"
+                href="/questoes"
                 style={{
                   flexShrink: 0,
                   fontSize: 14,
@@ -213,7 +213,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   whiteSpace: "nowrap",
                 }}
               >
-                Google Play em breve
+                Comecar questoes
               </Link>
             </div>
           </article>

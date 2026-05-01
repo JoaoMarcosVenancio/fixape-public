@@ -1,0 +1,42 @@
+1. Cargo: 2º Tenente da Polícia Militar (Oficial)
+Língua Portuguesa: Compreensão e interpretação de textos; Tipologias e gêneros textuais; Ortografia oficial; Acentuação gráfica; Emprego das classes de palavras; Crase; Sintaxe da oração e do período; Coesão textual; Pontuação; Concordância nominal e verbal; Regência nominal e verbal; Colocação pronominal; Significação das palavras; Variação linguística; Redação oficial (Manual da Presidência da República)
+.
+Língua Estrangeira (Inglês): Compreensão e interpretação de textos; Vocabulário; Estruturas gramaticais (Substantivos, Adjetivos, Advérbios, Preposições, Artigos, Pronomes, Phrasal verbs, Tempos verbais, Verbos modais, Voz ativa/passiva, Orações adverbiais, condicionais e relativas, Padrões verbais, Question tags)
+.
+Língua Estrangeira (Espanhol): Leitura e compreensão de textos; Determinantes do nome; Substantivos; Adjetivos; Pronomes; Verbos; Advérbios; Preposições; Conjunções; Acentuação; Sinônimos e antônimos; Divergências entre português e espanhol
+.
+Raciocínio Lógico: Estruturas lógicas (proposições, conectivos, falácias); Lógica de argumentação (analogias, deduções, conclusões); Diagramas lógicos; Princípios e técnicas de contagem; Probabilidade
+.
+Estatística: Conceitos (população, amostra); Probabilidade (clássica, geométrica); Variáveis aleatórias; Descrição de dados (centralidade, dispersão, histograma); Testes de Hipóteses; Regressão Linear
+.
+Informática: Internet e intranet; Tecnologias e ferramentas; Proteção e segurança; Backup; Gerenciamento de arquivos e pastas; Windows; Pacote Microsoft Office 2019 e LibreOffice 7
+.
+Direito Constitucional: Conceito e estrutura da Constituição; Poder constituinte; Eficácia das normas; Controle de constitucionalidade; Direitos e garantias fundamentais; Organização do Estado e dos Poderes; Defesa do Estado; Ordem social; Constituição de Pernambuco; Súmulas e jurisprudência
+.
+Direito Administrativo: Regime jurídico; Poderes administrativos; Organização administrativa (direta e indireta); Atos administrativos; Responsabilidade civil do Estado; Controle da Administração; Licitações (Lei 14.133/2021); Processo administrativo (Lei 11.781/2000); Improbidade; Agentes Públicos (Leis 6.123/1968 e 6.783/1974); LAI e LGPD; Serviços públicos; Intervenção do Estado na propriedade
+.
+Direito Penal: Aplicação da lei penal; Teoria geral do crime (fato típico, ilicitude, culpabilidade); Penas e sua aplicação; Extinção da punibilidade; Crimes em espécie (contra a pessoa, patrimônio, dignidade sexual, fé pública e administração); Legislação especial (Abuso de autoridade, Crimes raciais, Hediondos, Trânsito, Tortura, Ambientais, Desarmamento, Maria da Penha e Drogas)
+.
+Direito Processual Penal: Investigação preliminar (Inquérito Policial); Ação penal; Jurisdição e competência; Provas; Prisões e medidas cautelares; Sujeitos do processo; Procedimentos; Nulidades; Sentença e recursos; Legislação especial (Prisão temporária, Juizados especiais, Interceptação telefônica e Organizações criminosas)
+.
+Direitos e Garantias Fundamentais: Declaração Universal dos Direitos Humanos; Convenções sobre eliminação de discriminação (religiosa, contra a mulher, racial, pessoas com deficiência); Estatutos (Criança e Adolescente, Idoso, PCD); Combate à Tortura
+.
+Direito Penal Militar: Aplicação da lei penal militar; Crime; Imputabilidade; Concurso de agentes; Penas; Medidas de segurança; Ação penal; Extinção da punibilidade; Crimes militares em tempo de paz e de guerra
+.
+Direito Processual Penal Militar: Polícia Judiciária Militar; IPM; Ação penal militar; Processo penal militar em geral; Sujeitos do processo; Foro e competência; Medidas preventivas e assecuratórias; Atos probatórios; Processos ordinários e especiais; Nulidades e recursos
+.
+
+--------------------------------------------------------------------------------
+2. Cargo: Soldado da Polícia Militar (Praça)
+Língua Portuguesa: Tópicos idênticos aos do cargo de Oficial (Compreensão de textos, gramática, sintaxe, pontuação e redação oficial)
+.
+História de Pernambuco: Ocupação e colonização; Ciclo do açúcar; Formação de Olinda e Recife; Presença holandesa (Nassau); Movimentos de resistência e emancipacionistas (Quilombos, 1817, Confederação do Equador, etc.); Pernambuco e a República; Cultura popular (Frevo, Maracatu); Herança Afrodescendente
+.
+Raciocínio Lógico: Tópicos idênticos aos do cargo de Oficial (Estruturas lógicas, argumentação, diagramas, contagem e probabilidade)
+.
+Informática: Tópicos idênticos aos do cargo de Oficial (Internet/Intranet, segurança, backup, Windows e pacotes Office/LibreOffice)
+.
+Direito Constitucional: Princípios fundamentais; Direitos e garantias fundamentais; Organização do Estado (competências, administração pública, militares dos estados); Organização dos Poderes; Defesa do Estado e das instituições democráticas
+.
+Direitos Humanos e Legislação Extravagante: Teoria geral dos Direitos Humanos; Evolução histórica; Incorporação de normas internacionais; Declaração Universal dos Direitos Humanos; Crimes no ECA; Lei de Abuso de Autoridade; Lei de Tortura; Lei Maria da Penha; Crimes raciais; Crimes Ambientais; Crimes Hediondos; Lei de Drogas; Estatuto dos Policiais Militares de Pernambuco (Lei Estadual nº 6.783/1974)
+.

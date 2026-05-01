@@ -3,12 +3,12 @@ import { StaticPageShell } from "@/components/site/SiteChrome";
 
 export default function SoldadoPmpePage() {
   const items = [
-    "Língua Portuguesa",
-    "História de Pernambuco",
-    "Raciocínio Lógico",
-    "Informática",
+    "Lingua Portuguesa",
+    "Historia de Pernambuco",
+    "Raciocinio Logico",
+    "Informatica",
     "Direito Constitucional",
-    "Direitos Humanos e legislação",
+    "Direitos Humanos e Legislacao",
   ];
 
   return (
@@ -32,13 +32,14 @@ export default function SoldadoPmpePage() {
               Soldado PMPE
             </p>
             <h1 style={{ fontSize: "clamp(34px, 6vw, 60px)", fontWeight: 800, letterSpacing: "-2px", color: "#111827", margin: "0 0 18px", lineHeight: 1.1 }}>
-              Estude para Soldado PMPE com foco no edital.
+              Trilha web para estudar PMPE Soldado.
             </h1>
             <p style={{ fontSize: 18, color: "#6b7280", lineHeight: 1.65, margin: "0 auto 34px", maxWidth: 620 }}>
-              O FixaPE organiza a prática por matéria e tópico para ajudar candidatos a criar rotina, revisar erros e acompanhar evolução pelo app Android.
+              O FixaPE sera uma plataforma web estatica para praticar questoes gratuitas por materia e topico,
+              revisar erros e acompanhar progresso no proprio navegador.
             </p>
             <Link
-              href="/#download"
+              href="#materias"
               style={{
                 display: "inline-flex",
                 fontSize: 16,
@@ -51,24 +52,25 @@ export default function SoldadoPmpePage() {
                 boxShadow: "0 4px 24px rgba(59,130,246,0.4)",
               }}
             >
-              Google Play em breve
+              Ver materias
             </Link>
           </div>
         </section>
 
-        <section style={{ background: "#f8faff", padding: "80px 24px", borderTop: "1px solid #e8edf8", borderBottom: "1px solid #e8edf8" }}>
+        <section id="materias" style={{ background: "#f8faff", padding: "80px 24px", borderTop: "1px solid #e8edf8", borderBottom: "1px solid #e8edf8" }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 800, letterSpacing: "-1.2px", color: "#111827", margin: "0 0 14px", textAlign: "center" }}>
               Uma trilha enxuta para a prova de Soldado.
             </h2>
             <p style={{ fontSize: 16, color: "#6b7280", lineHeight: 1.7, margin: "0 auto 42px", maxWidth: 650, textAlign: "center" }}>
-              A proposta é reduzir dispersão: abrir o app, escolher o assunto do edital e resolver questões em sessões curtas.
+              A proposta e reduzir dispersao: abrir o site, escolher o assunto do edital e resolver questoes em sessoes curtas.
+              A funcionalidade de questoes entra na proxima fase.
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
               {items.map((item) => (
                 <div key={item} style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "20px 22px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: "#111827" }}>{item}</div>
-                  <div style={{ fontSize: 13, color: "#9ca3af", marginTop: 6 }}>Questões e revisão por tópico</div>
+                  <div style={{ fontSize: 13, color: "#9ca3af", marginTop: 6 }}>Questoes e revisao por topico</div>
                 </div>
               ))}
             </div>
@@ -78,4 +80,3 @@ export default function SoldadoPmpePage() {
     </StaticPageShell>
   );
 }
-

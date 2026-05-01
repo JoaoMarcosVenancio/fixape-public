@@ -1,0 +1,191 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { getSubjectDisplayName } from "@/lib/questions/display";
+import { buildQuestionsUrl } from "@/lib/questions/urls";
+import type { SoldadoQuestion } from "@/lib/questions/types";
+import { clearProgress, getInitialProgress, loadProgress } from "@/lib/progress/storage";
+import { calculateProgressBySubject, calculateProgressStats } from "@/lib/progress/stats";
+import type { SoldadoProgress } from "@/lib/progress/types";
+
+export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] }) {
+  const [progress, setProgress] = useState<SoldadoProgress>(() => getInitialProgress());
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setProgress(loadProgress());
+    setReady(true);
+  }, []);
+
+  const stats = useMemo(() => calculateProgressStats(progress), [progress]);
+  const bySubject = useMemo(() => calculateProgressBySubject(questions, progress), [questions, progress]);
+
+  function handleClearProgress() {
+    const confirmed = window.confirm("Tem certeza que deseja zerar seu progresso local? Esta acao nao pode ser desfeita.");
+    if (!confirmed) return;
+    setProgress(clearProgress());
+  }
+
+  return (
+    <main style={{ background: "#f8faff", minHeight: "100vh" }}>
+      <section style={{ background: "#fff", borderBottom: "1px solid #e8edf8", padding: "56px 24px 34px" }}>
+        <div style={{ maxWidth: 980, margin: "0 auto" }}>
+          <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2563eb", margin: "0 0 12px" }}>
+            Progresso PMPE Soldado
+          </p>
+          <h1 style={{ fontSize: "clamp(32px, 6vw, 56px)", lineHeight: 1.08, letterSpacing: "-1.8px", color: "#111827", margin: "0 0 16px", fontWeight: 850 }}>
+            Seu desempenho neste navegador.
+          </h1>
+          <p style={{ fontSize: 17, color: "#6b7280", lineHeight: 1.65, maxWidth: 700, margin: 0 }}>
+            As informacoes abaixo ficam salvas em localStorage. Nao ha login, servidor ou sincronizacao nesta versao estatica.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ padding: "24px 24px 88px" }}>
+        <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 18 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 14 }}>
+            {[
+              ["Respondidas", stats.totalAnswered],
+              ["Acertos", stats.totalCorrect],
+              ["Erros", stats.totalWrong],
+              ["Aproveitamento", `${stats.accuracyPercentage}%`],
+              ["Favoritas", stats.favoriteCount],
+            ].map(([label, value]) => (
+              <section key={label} style={metricCardStyle}>
+                <div style={{ fontSize: 13, color: "#6b7280", marginBottom: 8 }}>{label}</div>
+                <div style={{ fontSize: 30, fontWeight: 850, color: "#111827", lineHeight: 1 }}>{ready ? value : "-"}</div>
+              </section>
+            ))}
+          </div>
+
+          <section style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: 18, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <Link href={buildQuestionsUrl()} style={primaryLinkStyle}>
+                Continuar questoes
+              </Link>
+              <Link href={buildQuestionsUrl({ status: "wrong" })} style={secondaryLinkStyle}>
+                Revisar erros
+              </Link>
+              <Link href={buildQuestionsUrl({ status: "favorites" })} style={secondaryLinkStyle}>
+                Ver favoritas
+              </Link>
+              <button type="button" onClick={handleClearProgress} style={dangerButtonStyle}>
+                Zerar progresso
+              </button>
+            </div>
+          </section>
+
+          <section style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "26px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+            <h2 style={{ fontSize: 20, fontWeight: 850, color: "#111827", margin: "0 0 18px" }}>Progresso por materia</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
+              {bySubject.map((subject) => (
+                <article key={subject.subject} style={{ border: "1.5px solid #e5e7eb", borderRadius: 14, padding: 16 }}>
+                  <h3 style={{ fontSize: 16, fontWeight: 850, color: "#111827", margin: "0 0 12px", lineHeight: 1.35 }}>
+                    {getSubjectDisplayName(subject.subject)}
+                  </h3>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8, marginBottom: 14 }}>
+                    <Metric label="Total" value={subject.total} />
+                    <Metric label="Respondidas" value={subject.answered} />
+                    <Metric label="Acertos" value={subject.correct} />
+                    <Metric label="Erros" value={subject.wrong} />
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8 }}>
+                    <span style={{ fontSize: 13, color: "#6b7280" }}>Aproveitamento</span>
+                    <strong style={{ fontSize: 13, color: "#111827" }}>{subject.accuracyPercentage}%</strong>
+                  </div>
+                  <div style={{ height: 8, background: "#eef2ff", borderRadius: 980, overflow: "hidden" }}>
+                    <div
+                      style={{
+                        width: `${subject.total === 0 ? 0 : Math.round((subject.answered / subject.total) * 100)}%`,
+                        height: "100%",
+                        background: "linear-gradient(135deg,#2563eb,#3b82f6)",
+                      }}
+                    />
+                  </div>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
+                    <Link href={buildQuestionsUrl({ materia: subject.subject })} style={smallLinkStyle}>
+                      Estudar materia
+                    </Link>
+                    <Link href={buildQuestionsUrl({ materia: subject.subject, status: "wrong" })} style={smallLinkStyle}>
+                      Revisar erros
+                    </Link>
+                    <Link href={buildQuestionsUrl({ materia: subject.subject, status: "favorites" })} style={smallLinkStyle}>
+                      Ver favoritas
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: number }) {
+  return (
+    <div style={{ background: "#f8faff", border: "1px solid #e8edf8", borderRadius: 10, padding: "10px 12px" }}>
+      <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>{label}</div>
+      <div style={{ fontSize: 18, fontWeight: 850, color: "#111827" }}>{value}</div>
+    </div>
+  );
+}
+
+const metricCardStyle: React.CSSProperties = {
+  background: "#fff",
+  border: "1.5px solid #e5e7eb",
+  borderRadius: 16,
+  padding: "22px 24px",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+};
+
+const primaryLinkStyle: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: 42,
+  color: "#fff",
+  background: "linear-gradient(135deg,#2563eb,#3b82f6)",
+  borderRadius: 980,
+  padding: "10px 18px",
+  fontSize: 14,
+  fontWeight: 800,
+  textDecoration: "none",
+};
+
+const secondaryLinkStyle: React.CSSProperties = {
+  ...primaryLinkStyle,
+  color: "#374151",
+  background: "#fff",
+  border: "1.5px solid #d1d5db",
+};
+
+const dangerButtonStyle: React.CSSProperties = {
+  minHeight: 42,
+  color: "#b91c1c",
+  background: "#fff",
+  border: "1.5px solid rgba(220,38,38,0.28)",
+  borderRadius: 980,
+  padding: "10px 18px",
+  fontSize: 14,
+  fontWeight: 800,
+  cursor: "pointer",
+};
+
+const smallLinkStyle: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: 34,
+  color: "#2563eb",
+  background: "#fff",
+  border: "1.5px solid rgba(37,99,235,0.24)",
+  borderRadius: 980,
+  padding: "7px 12px",
+  fontSize: 12,
+  fontWeight: 800,
+  textDecoration: "none",
+};

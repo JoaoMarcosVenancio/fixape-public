@@ -3,10 +3,10 @@ import { StaticPageShell } from "@/components/site/SiteChrome";
 
 export default function OficialPmpePage() {
   const pillars = [
-    "Conteúdo programático separado por assunto",
-    "Prática rápida para rotina diária",
-    "Revisão de erros e pontos fracos",
-    "Acompanhamento de progresso no Android",
+    "Conteudo programatico separado por assunto",
+    "Pratica rapida para rotina diaria",
+    "Revisao de erros e pontos fracos",
+    "Acompanhamento de progresso no navegador",
   ];
 
   return (
@@ -30,13 +30,13 @@ export default function OficialPmpePage() {
               Oficial PMPE
             </p>
             <h1 style={{ fontSize: "clamp(34px, 6vw, 60px)", fontWeight: 800, letterSpacing: "-2px", color: "#111827", margin: "0 0 18px", lineHeight: 1.1 }}>
-              Preparação para Oficial PMPE, sem plataforma pesada.
+              Trilha de Oficial PMPE planejada para uma etapa futura.
             </h1>
             <p style={{ fontSize: 18, color: "#6b7280", lineHeight: 1.65, margin: "0 auto 34px", maxWidth: 620 }}>
-              O caminho de Oficial será tratado como uma trilha própria no app, mantendo o mesmo foco: questões organizadas, progresso claro e revisão objetiva.
+              O foco atual do FixaPE e PMPE Soldado. Esta pagina permanece no codigo para uso futuro, mas nao faz parte do MVP atual.
             </p>
             <Link
-              href="/#download"
+              href="/soldado-pmpe"
               style={{
                 display: "inline-flex",
                 fontSize: 16,
@@ -49,7 +49,7 @@ export default function OficialPmpePage() {
                 boxShadow: "0 4px 24px rgba(59,130,246,0.4)",
               }}
             >
-              Google Play em breve
+              Ver PMPE Soldado
             </Link>
           </div>
         </section>
@@ -57,7 +57,7 @@ export default function OficialPmpePage() {
         <section style={{ background: "#f8faff", padding: "80px 24px", borderTop: "1px solid #e8edf8", borderBottom: "1px solid #e8edf8" }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 800, letterSpacing: "-1.2px", color: "#111827", margin: "0 0 38px", textAlign: "center" }}>
-              O mesmo método, adaptado ao edital de Oficial.
+              Estrutura preservada para evolucao posterior.
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
               {pillars.map((item) => (
@@ -72,4 +72,3 @@ export default function OficialPmpePage() {
     </StaticPageShell>
   );
 }
-

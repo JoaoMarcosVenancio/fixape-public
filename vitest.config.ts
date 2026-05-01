@@ -10,12 +10,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    include: ["tests/unit/blog-posts.test.ts"],
+    include: ["tests/unit/*.test.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html", "lcov"],
       reportsDirectory: "./coverage",
-      include: ["app/blog/posts.ts"],
+      include: ["app/blog/posts.ts", "lib/questions/**/*.ts"],
       exclude: [
         "**/*.test.ts",
         "tests/**",
