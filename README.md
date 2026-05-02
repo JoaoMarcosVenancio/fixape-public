@@ -1,6 +1,6 @@
-# FixaPE Site
+# PasseiPMPE Site
 
-Static web-first website for FixaPE, focused on PMPE Soldado question practice.
+Static web-first website for PasseiPMPE, focused on PMPE Soldado question practice.
 
 ## Scope
 

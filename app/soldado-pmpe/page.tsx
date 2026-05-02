@@ -35,8 +35,8 @@ export default function SoldadoPmpePage() {
               Trilha web para estudar PMPE Soldado.
             </h1>
             <p style={{ fontSize: 18, color: "#6b7280", lineHeight: 1.65, margin: "0 auto 34px", maxWidth: 620 }}>
-              O FixaPE sera uma plataforma web estatica para praticar questoes gratuitas por materia e topico,
-              revisar erros e acompanhar progresso no proprio navegador.
+              O PasseiPMPE será uma plataforma web estática para praticar questões gratuitas por matéria e tópico,
+              revisar erros e acompanhar progresso no próprio navegador.
             </p>
             <Link
               href="#materias"

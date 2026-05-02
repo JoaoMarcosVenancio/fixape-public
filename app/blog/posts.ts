@@ -35,8 +35,8 @@ export const posts: Post[] = [
     summary:
       "O tão esperado edital do concurso da Polícia Militar de Pernambuco foi publicado. Confira vagas, requisitos, conteúdo programático e datas importantes para não perder nenhum prazo.",
     category: "edital",
-    author: "Equipe FixaPE",
-    authorInitials: "FP",
+    author: "Equipe PasseiPMPE",
+    authorInitials: "PP",
     date: "2025-03-15",
     readingTime: 8,
     featured: true,
@@ -47,7 +47,7 @@ export const posts: Post[] = [
       "As inscrições serão realizadas exclusivamente pelo site da banca organizadora, no período de 20 de março a 20 de abril de 2025. A taxa de inscrição é de R$ 85,00.",
       "Entre as disciplinas cobradas na prova objetiva estão: Língua Portuguesa, Matemática, Noções de Informática, Legislação Estadual, Direitos Humanos, História de Pernambuco e Direito Penal e Processual Penal.",
       "A prova objetiva está prevista para acontecer em junho de 2025, com local e horário a serem divulgados com antecedência. Candidatos aprovados ainda passarão por exame de saúde, teste de aptidão física (TAF) e investigação social.",
-      "Confira o cronograma completo no edital publicado no site oficial da PMPE e comece a organizar seus estudos com antecedência. Use a plataforma FixaPE para praticar questões reais de todas as disciplinas do edital.",
+      "Confira o cronograma completo no edital publicado no site oficial da PMPE e comece a organizar seus estudos com antecedência. Use a plataforma PasseiPMPE para praticar questões reais de todas as disciplinas do edital.",
     ],
   },
   {
@@ -67,7 +67,7 @@ export const posts: Post[] = [
       "Comece pelos princípios fundamentais. Legalidade, culpabilidade, proporcionalidade e dignidade da pessoa humana formam a base que vai nortear o entendimento de todo o restante da matéria.",
       "Em seguida, passe para os elementos do crime: fato típico, ilicitude e culpabilidade. Entenda o que é dolo e culpa, e como diferenciar crimes dolosos de culposos.",
       "Um ponto que sempre cai nas provas da PMPE são as excludentes de ilicitude: legítima defesa, estado de necessidade, estrito cumprimento do dever legal e exercício regular de direito. Memorize os requisitos de cada uma delas.",
-      "Use a plataforma FixaPE para resolver questões específicas de Direito Penal. A prática com questões reais de concursos anteriores é a melhor forma de identificar seus pontos fracos e consolidar o aprendizado.",
+      "Use a plataforma PasseiPMPE para resolver questões específicas de Direito Penal. A prática com questões reais de concursos anteriores é a melhor forma de identificar seus pontos fracos e consolidar o aprendizado.",
       "Dedique pelo menos 3 horas por semana exclusivamente para Direito Penal, divididas em sessões curtas de estudo focado. Com consistência, você verá resultados em poucas semanas.",
     ],
   },
@@ -77,8 +77,8 @@ export const posts: Post[] = [
     summary:
       "As inscrições para o novo concurso da PM Pernambuco já estão abertas. Saiba como se inscrever, quais documentos são necessários e não perca o prazo final.",
     category: "noticias",
-    author: "Redação FixaPE",
-    authorInitials: "RF",
+    author: "Redação PasseiPMPE",
+    authorInitials: "RP",
     date: "2025-03-20",
     readingTime: 4,
     featured: false,
@@ -109,7 +109,7 @@ export const posts: Post[] = [
       "Na Constituição Estadual, fique atento especialmente aos artigos sobre a organização dos poderes, os direitos e garantias fundamentais no âmbito estadual e as competências da Polícia Militar.",
       "Na Lei de Organização da PMPE, os artigos mais cobrados são os que tratam das atribuições e missões da Polícia Militar, estrutura organizacional e hierarquia.",
       "O Estatuto dos Policiais Militares (Lei nº 6.783/74) aparece frequentemente em questões sobre deveres e obrigações do policial, proibições e regime disciplinar.",
-      "Utilize flashcards e questões práticas para fixar cada um desses temas. A plataforma FixaPE tem uma seção dedicada à Legislação Estadual com questões reais dos últimos concursos.",
+      "Utilize flashcards e questões práticas para fixar cada um desses temas. A plataforma PasseiPMPE tem uma seção dedicada à Legislação Estadual com questões reais dos últimos concursos.",
     ],
   },
   {
@@ -130,7 +130,7 @@ export const posts: Post[] = [
       "Meses 3 e 4 — Aprofundamento: Avance para as matérias específicas como Direito Penal, Legislação Estadual e História de Pernambuco. Comece a resolver questões de cada tema logo após estudá-lo.",
       "Mês 5 — Revisão e questões: Pare de estudar conteúdo novo. Revise todos os temas estudados e intensifique a resolução de questões, preferencialmente simulados completos.",
       "Mês 6 — Sprint final: Identifique seus pontos fracos e revise apenas eles. Faça pelo menos 3 simulados completos no tempo real da prova. Durma bem nos dias anteriores ao exame.",
-      "Use a plataforma FixaPE todos os dias, mesmo que por apenas 20 minutos. A consistência supera a intensidade quando se trata de aprendizado.",
+      "Use a plataforma PasseiPMPE todos os dias, mesmo que por apenas 20 minutos. A consistência supera a intensidade quando se trata de aprendizado.",
     ],
   },
   {
@@ -139,8 +139,8 @@ export const posts: Post[] = [
     summary:
       "O gabarito oficial da prova objetiva foi divulgado pela banca. Veja as respostas corretas, como calcular sua pontuação e quando saem os resultados preliminares.",
     category: "noticias",
-    author: "Redação FixaPE",
-    authorInitials: "RF",
+    author: "Redação PasseiPMPE",
+    authorInitials: "RP",
     date: "2025-04-05",
     readingTime: 3,
     featured: false,
@@ -150,7 +150,7 @@ export const posts: Post[] = [
       "Para calcular sua nota, some o número de questões que você acertou em cada disciplina. A prova objetiva tem 120 questões no total, distribuídas entre as disciplinas do edital.",
       "O gabarito definitivo, após análise de recursos, será publicado em 30 dias. Candidatos que identificarem possíveis erros nas questões podem interpor recurso pelo site da banca dentro do prazo de 5 dias úteis.",
       "O resultado preliminar, com a nota da prova objetiva de cada candidato, está previsto para ser divulgado em maio de 2025. Candidatos com nota acima do ponto de corte avançarão para as etapas seguintes: TAF, exame de saúde e investigação social.",
-      "Fique atento ao cronograma oficial e acompanhe as atualizações no FixaPE para ser sempre o primeiro a saber das novidades do concurso.",
+      "Fique atento ao cronograma oficial e acompanhe as atualizações no PasseiPMPE para ser sempre o primeiro a saber das novidades do concurso.",
     ],
   },
 ];

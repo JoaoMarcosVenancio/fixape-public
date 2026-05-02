@@ -1,6 +1,6 @@
-# FixaPE Public Export Notes
+# PasseiPMPE Public Export Notes
 
-This folder is intended to become a new clean public GitHub repository for the FixaPE static website.
+This folder is intended to become a new clean public GitHub repository for the PasseiPMPE static website.
 
 Do not copy or preserve the old private repository `.git` history. Start with a fresh public repository and make a new first commit from these files.
 
@@ -21,7 +21,7 @@ Recommended first public commit sequence:
 git init
 git branch -M main
 git add .
-git commit -m "Initial static FixaPE website"
+git commit -m "Initial static PasseiPMPE website"
 git remote add origin <PUBLIC_REPOSITORY_URL>
 git push -u origin main
 ```

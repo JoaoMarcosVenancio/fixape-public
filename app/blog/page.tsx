@@ -298,7 +298,7 @@ export default function BlogPage() {
               textTransform: "uppercase", color: "#3b82f6", marginBottom: 14,
               animation: "blogFadeUp 0.5s ease both", animationDelay: "0.05s",
             }}>
-              Blog FixaPE
+              Blog PasseiPMPE
             </p>
             <h1 style={{
               fontSize: "clamp(34px, 6vw, 60px)", fontWeight: 800,

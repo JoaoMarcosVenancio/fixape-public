@@ -33,7 +33,7 @@ export default function OficialPmpePage() {
               Trilha de Oficial PMPE planejada para uma etapa futura.
             </h1>
             <p style={{ fontSize: 18, color: "#6b7280", lineHeight: 1.65, margin: "0 auto 34px", maxWidth: 620 }}>
-              O foco atual do FixaPE e PMPE Soldado. Esta pagina permanece no codigo para uso futuro, mas nao faz parte do MVP atual.
+              O foco atual do PasseiPMPE é PMPE Soldado. Esta página permanece no código para uso futuro, mas não faz parte do MVP atual.
             </p>
             <Link
               href="/soldado-pmpe"

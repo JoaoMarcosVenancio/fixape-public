@@ -195,7 +195,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   Estude PMPE Soldado na web
                 </div>
                 <div style={{ fontSize: 14, color: "#6b7280" }}>
-                  O FixaPE esta sendo preparado para concentrar questoes gratuitas, progresso e revisao de erros no navegador.
+                  O PasseiPMPE está sendo preparado para concentrar questões gratuitas, progresso e revisão de erros no navegador.
                 </div>
               </div>
               <Link

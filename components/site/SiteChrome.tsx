@@ -37,14 +37,14 @@ export function SiteHeader() {
           href="/"
           style={{
             fontWeight: 850,
-            fontSize: 19,
-            letterSpacing: "-0.4px",
+            fontSize: "clamp(19px, 2vw, 21px)",
+            letterSpacing: "-0.55px",
             textDecoration: "none",
             color: "#111827",
             lineHeight: 1,
           }}
         >
-          Fixa
+          Passei
           <span
             style={{
               background: "linear-gradient(135deg,#2563eb,#3b82f6)",
@@ -52,7 +52,7 @@ export function SiteHeader() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            PE
+            PMPE
           </span>
         </Link>
 
@@ -117,7 +117,7 @@ export function SiteFooter() {
         }}
       >
         <p style={{ fontSize: 13, color: "#9ca3af", margin: 0 }}>
-          FixaPE - PMPE Soldado na web - {new Date().getFullYear()}
+          PasseiPMPE - PMPE Soldado na web - 2026
         </p>
         <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
           <Link href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>

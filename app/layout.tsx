@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FixaPE - Questoes gratuitas para PMPE Soldado",
-  description: "Plataforma web estatica para praticar questoes gratuitas e estudar PMPE Soldado.",
+  title: "PasseiPMPE - Questões gratuitas para PMPE Soldado",
+  description: "Plataforma web estática para praticar questões gratuitas e estudar PMPE Soldado.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
