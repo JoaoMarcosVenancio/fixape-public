@@ -38,10 +38,10 @@ export function QuestionFilters({
       className="question-filters"
       style={{
         background: "rgba(255,255,255,0.82)",
-        border: "1px solid #e6ebf2",
-        borderRadius: 12,
-        padding: "10px 12px 12px",
-        boxShadow: "0 1px 4px rgba(15,23,42,0.035)",
+        border: "1px solid rgba(226,232,240,0.95)",
+        borderRadius: 14,
+        padding: "12px 14px 14px",
+        boxShadow: "0 1px 8px rgba(15,23,42,0.035)",
       }}
     >
       <button
@@ -64,10 +64,10 @@ export function QuestionFilters({
           textAlign: "left",
         }}
       >
-        <span style={{ display: "grid", gap: 2 }}>
+        <span style={{ display: "grid", gap: 3, minWidth: 0 }}>
           <strong style={{ fontSize: 14, fontWeight: 780 }}>Filtros</strong>
           <span style={{ fontSize: 12, color: "#6b7280" }}>
-            {activeCount > 0 ? `${activeCount} filtro${activeCount === 1 ? "" : "s"} ativo${activeCount === 1 ? "" : "s"}` : "Todas as questoes"}
+            {activeCount > 0 ? `${activeCount} filtro${activeCount === 1 ? "" : "s"} ativo${activeCount === 1 ? "" : "s"}` : "Todas as questões"}
           </span>
         </span>
         <span
@@ -76,7 +76,8 @@ export function QuestionFilters({
             width: 30,
             height: 30,
             borderRadius: 999,
-            border: "1px solid #dbe3f0",
+            border: "1px solid rgba(37,99,235,0.18)",
+            background: "rgba(37,99,235,0.06)",
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
@@ -101,7 +102,7 @@ export function QuestionFilters({
       >
         <label style={{ display: "grid", gap: 5 }}>
           <span style={filterLabelStyle}>
-            Materia
+            Matéria
           </span>
           <select value={value.subject} onChange={(event) => updateFilter("subject", event.target.value)} style={selectStyle}>
             <option value="">Todas</option>
@@ -115,7 +116,7 @@ export function QuestionFilters({
 
         <label style={{ display: "grid", gap: 5 }}>
           <span style={filterLabelStyle}>
-            Topico
+            Tópico
           </span>
           <select
             value={value.topic}
@@ -123,7 +124,7 @@ export function QuestionFilters({
             disabled={!value.subject || topics.length === 0}
             style={{ ...selectStyle, color: !value.subject || topics.length === 0 ? "#9ca3af" : "#111827" }}
           >
-            <option value="">{value.subject ? "Todos" : "Selecione uma materia"}</option>
+            <option value="">{value.subject ? "Todos" : "Selecione uma matéria"}</option>
             {topics.map((topic) => (
               <option key={topic} value={topic}>
                 {topic}
@@ -166,7 +167,7 @@ export function QuestionFilters({
           </span>
           <select value={value.status} onChange={(event) => updateFilter("status", event.target.value)} style={selectStyle}>
             <option value="">Todos</option>
-            <option value="unanswered">Nao respondidas</option>
+            <option value="unanswered">Não respondidas</option>
             <option value="answered">Respondidas</option>
             <option value="wrong">Erradas</option>
             <option value="favorites">Favoritas</option>
@@ -176,12 +177,27 @@ export function QuestionFilters({
 
       <style>{`
         .question-filter-toggle { display: none !important; }
+        .question-filter-toggle:focus-visible,
+        .question-filter-grid select:focus-visible {
+          outline: 3px solid rgba(59,130,246,0.18);
+          outline-offset: 2px;
+        }
         @media (max-width: 720px) {
-          .question-filters { padding: 9px 10px !important; }
+          .question-filters {
+            padding: 12px !important;
+            border-radius: 16px !important;
+          }
           .question-filter-toggle { display: flex !important; }
           .question-filter-grid { grid-template-columns: 1fr !important; }
           .question-filter-grid:not(.is-open) { display: none !important; }
-          .question-filter-grid.is-open { margin-top: 9px !important; }
+          .question-filter-grid.is-open {
+            margin-top: 12px !important;
+            gap: 12px !important;
+          }
+          .question-filter-grid select {
+            min-height: 44px !important;
+            font-size: 14px !important;
+          }
         }
       `}</style>
     </section>
@@ -190,9 +206,9 @@ export function QuestionFilters({
 
 const selectStyle: React.CSSProperties = {
   width: "100%",
-  minHeight: 38,
+  minHeight: 40,
   border: "1px solid #e3e8ef",
-  borderRadius: 9,
+  borderRadius: 10,
   background: "#fbfdff",
   color: "#1f2937",
   fontSize: 13,

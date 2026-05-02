@@ -22,19 +22,7 @@ const primaryButtonStyle: React.CSSProperties = {
 
 function PrimaryLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link
-      href={href}
-      className="home-cta"
-      style={primaryButtonStyle}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "scale(1.03)";
-        e.currentTarget.style.boxShadow = "0 6px 32px rgba(59,130,246,0.52)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "scale(1)";
-        e.currentTarget.style.boxShadow = "0 4px 24px rgba(59,130,246,0.4)";
-      }}
-    >
+    <Link href={href} className="home-cta" style={primaryButtonStyle}>
       {children}
     </Link>
   );
@@ -57,26 +45,28 @@ function Navbar() {
         left: 0,
         right: 0,
         zIndex: 100,
-        transition: "background 0.3s, box-shadow 0.3s",
-        background: scrolled ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.85)",
+        transition: "background 0.3s, box-shadow 0.3s, border-color 0.3s",
+        background: scrolled ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.88)",
         backdropFilter: "blur(20px) saturate(180%)",
         WebkitBackdropFilter: "blur(20px) saturate(180%)",
-        borderBottom: `1px solid ${scrolled ? "rgba(0,0,0,0.08)" : "transparent"}`,
+        borderBottom: `1px solid ${scrolled ? "rgba(226,232,240,0.92)" : "transparent"}`,
+        boxShadow: scrolled ? "0 1px 0 rgba(255,255,255,0.7), 0 8px 24px rgba(15,23,42,0.035)" : "none",
       }}
     >
       <div
+        className="home-header-inner"
         style={{
-          maxWidth: 1140,
+          maxWidth: 1120,
           margin: "0 auto",
-          padding: "0 28px",
-          height: 60,
+          padding: "0 24px",
+          minHeight: 64,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           gap: 20,
         }}
       >
-        <Link href="/" style={{ fontWeight: 850, fontSize: "clamp(19px, 2vw, 21px)", letterSpacing: "-0.55px", color: "#111827", textDecoration: "none" }}>
+        <Link className="home-brand-link" href="/" style={{ fontWeight: 850, fontSize: "clamp(19px, 2vw, 21px)", letterSpacing: "-0.55px", color: "#111827", textDecoration: "none", lineHeight: 1 }}>
           Passei
           <span
             style={{
@@ -89,19 +79,20 @@ function Navbar() {
           </span>
         </Link>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
-          <Link href="/blog" style={{ fontSize: 14, color: "#6b7280", textDecoration: "none" }}>
+        <div className="home-header-links" style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          <Link className="home-nav-link" href="/blog" style={{ fontSize: 14, color: "#6b7280", textDecoration: "none" }}>
             Blog
           </Link>
-          <Link href="/progresso" style={{ fontSize: 14, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="home-nav-link" href="/progresso" style={{ fontSize: 14, color: "#6b7280", textDecoration: "none" }}>
             Progresso
           </Link>
           <div className="nav-cta">
             <Link
               href="/questoes"
+              className="home-nav-cta"
               style={{
                 fontSize: 14,
-                fontWeight: 750,
+                fontWeight: 700,
                 color: "#fff",
                 background: "linear-gradient(135deg,#2563eb,#3b82f6)",
                 padding: "9px 18px",
@@ -207,19 +198,19 @@ function Hero() {
 
 function Footer() {
   return (
-    <footer style={{ background: "#fff", padding: "28px 24px", textAlign: "center", borderTop: "1px solid #e5e7eb" }}>
+    <footer style={{ background: "#fff", padding: "28px 24px", textAlign: "center", borderTop: "1px solid rgba(226,232,240,0.92)" }}>
       <div style={{ maxWidth: 960, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
         <p style={{ fontSize: 13, color: "#9ca3af", margin: 0 }}>
           PasseiPMPE - PMPE Soldado na web - 2026
         </p>
         <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
-          <Link href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="home-footer-link" href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Blog
           </Link>
-          <Link href="/privacidade" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="home-footer-link" href="/privacidade" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Privacidade
           </Link>
-          <Link href="/termos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="home-footer-link" href="/termos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Termos
           </Link>
         </div>
@@ -255,6 +246,46 @@ const globalStyles = `
   }
   .hero-copy > div {
     justify-content: flex-start !important;
+  }
+  .home-brand-link,
+  .home-nav-link,
+  .home-nav-cta,
+  .home-cta,
+  .home-footer-link {
+    outline: none;
+  }
+  .home-nav-link,
+  .home-footer-link {
+    transition: color 0.18s ease;
+  }
+  .home-nav-link:hover,
+  .home-footer-link:hover {
+    color: #111827 !important;
+  }
+  .home-nav-cta,
+  .home-cta {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .home-nav-cta:hover,
+  .home-cta:hover {
+    transform: translateY(-1px);
+    filter: saturate(1.05);
+  }
+  .home-cta:hover {
+    box-shadow: 0 6px 32px rgba(59,130,246,0.48) !important;
+  }
+  .home-nav-cta:active,
+  .home-cta:active {
+    transform: translateY(0) scale(0.99);
+  }
+  .home-brand-link:focus-visible,
+  .home-nav-link:focus-visible,
+  .home-nav-cta:focus-visible,
+  .home-cta:focus-visible,
+  .home-footer-link:focus-visible {
+    outline: 3px solid rgba(59,130,246,0.20);
+    outline-offset: 4px;
+    border-radius: 10px;
   }
   .question-visual {
     display: flex;
@@ -403,7 +434,7 @@ const globalStyles = `
     align-items: center;
     gap: 9px;
     min-height: 42px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid rgba(226,232,240,0.95);
     border-radius: 13px;
     background: #fff;
     padding: 8px 11px;
@@ -451,6 +482,14 @@ const globalStyles = `
   }
   @media (max-width: 760px) {
     .nav-cta { display: none; }
+    .home-header-inner {
+      min-height: 52px !important;
+      padding: 0 14px !important;
+      gap: 12px !important;
+    }
+    .home-header-links {
+      gap: 14px !important;
+    }
     .hero-inner {
       grid-template-columns: 1fr;
       gap: 36px;

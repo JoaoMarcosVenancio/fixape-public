@@ -41,16 +41,17 @@ function CategoryBadge({ category }: { category: Category }) {
 function RelatedCard({ post }: { post: Post }) {
   return (
     <Link
+      className="related-card"
       href={`/blog/${post.slug}`}
       style={{
         display: "flex",
         flexDirection: "column",
         background: "#fff",
-        border: "1.5px solid #e5e7eb",
+        border: "1px solid rgba(226,232,240,0.95)",
         borderRadius: 16,
         overflow: "hidden",
         textDecoration: "none",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+        boxShadow: "0 2px 12px rgba(15,23,42,0.045)",
       }}
     >
       <div style={{ background: post.coverGradient, height: 120, flexShrink: 0, position: "relative" }}>
@@ -85,6 +86,27 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         }
         * { box-sizing: border-box; }
         body { background: #fff; }
+        .post-back-link,
+        .post-cta,
+        .related-card {
+          outline: none;
+          transition: color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+        .post-back-link:hover {
+          color: #111827 !important;
+        }
+        .post-cta:hover,
+        .related-card:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 8px 24px rgba(37,99,235,0.12) !important;
+        }
+        .post-back-link:focus-visible,
+        .post-cta:focus-visible,
+        .related-card:focus-visible {
+          outline: 3px solid rgba(59,130,246,0.18);
+          outline-offset: 4px;
+          border-radius: 10px;
+        }
         @media (max-width: 600px) {
           .related-grid { grid-template-columns: 1fr !important; }
         }
@@ -104,6 +126,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
           <div style={{ paddingTop: 32, animation: "postFadeUp 0.4s ease both" }}>
             <Link
+              className="post-back-link"
               href="/blog"
               style={{
                 display: "inline-flex",
@@ -123,7 +146,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             style={{
               paddingTop: 24,
               paddingBottom: 32,
-              borderBottom: "1px solid #e5e7eb",
+              borderBottom: "1px solid rgba(226,232,240,0.95)",
               animation: "postFadeUp 0.5s ease both",
               animationDelay: "0.05s",
             }}
@@ -180,7 +203,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               style={{
                 marginTop: 48,
                 background: "linear-gradient(135deg, rgba(37,99,235,0.06) 0%, rgba(59,130,246,0.04) 100%)",
-                border: "1.5px solid rgba(59,130,246,0.2)",
+                border: "1px solid rgba(59,130,246,0.18)",
                 borderRadius: 16,
                 padding: "28px 32px",
                 display: "flex",
@@ -199,6 +222,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </div>
               </div>
               <Link
+                className="post-cta"
                 href="/questoes"
                 style={{
                   flexShrink: 0,
@@ -209,11 +233,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   padding: "11px 24px",
                   borderRadius: 980,
                   textDecoration: "none",
-                  boxShadow: "0 2px 12px rgba(59,130,246,0.35)",
+                  boxShadow: "0 8px 18px rgba(37,99,235,0.18)",
                   whiteSpace: "nowrap",
                 }}
               >
-                Comecar questoes
+                Começar questões
               </Link>
             </div>
           </article>

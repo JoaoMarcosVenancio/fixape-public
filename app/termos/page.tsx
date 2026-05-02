@@ -18,7 +18,7 @@ export default function TermosPage() {
           ["Conteúdo educacional", "Materiais e textos têm finalidade educacional e informativa. O candidato deve sempre consultar editais e fontes oficiais."],
           ["Plataforma web", "Nesta etapa, o PasseiPMPE não usa login, pagamento, backend ou banco de dados. Funcionalidades de prática serão adicionadas de forma estática e local."],
         ].map(([title, text]) => (
-          <section key={title} style={{ background: "#f8faff", border: "1px solid #e8edf8", borderRadius: 18, padding: "24px 26px", marginBottom: 14 }}>
+          <section key={title} style={{ background: "#f8faff", border: "1px solid rgba(226,232,240,0.95)", borderRadius: 16, padding: "24px 26px", marginBottom: 14 }}>
             <h2 style={{ fontSize: 18, fontWeight: 800, color: "#111827", margin: "0 0 8px" }}>{title}</h2>
             <p style={{ fontSize: 15, color: "#6b7280", lineHeight: 1.7, margin: 0 }}>{text}</p>
           </section>

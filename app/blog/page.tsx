@@ -42,6 +42,7 @@ function FeaturedPost({ post }: { post: Post }) {
   const [hovered, setHovered] = useState(false);
   return (
     <Link
+      className="blog-featured-card"
       href={`/blog/${post.slug}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -50,11 +51,11 @@ function FeaturedPost({ post }: { post: Post }) {
         gridTemplateColumns: "1fr 1fr",
         gap: 0,
         background: "#fff",
-        border: `1.5px solid ${hovered ? "rgba(59,130,246,0.35)" : "#e5e7eb"}`,
+        border: `1px solid ${hovered ? "rgba(59,130,246,0.35)" : "rgba(226,232,240,0.95)"}`,
         borderRadius: 20,
         overflow: "hidden",
         textDecoration: "none",
-        boxShadow: hovered ? "0 8px 40px rgba(59,130,246,0.12)" : "0 2px 12px rgba(0,0,0,0.04)",
+        boxShadow: hovered ? "0 10px 34px rgba(37,99,235,0.12)" : "0 2px 14px rgba(15,23,42,0.045)",
         transition: "border-color 0.25s, box-shadow 0.25s",
         animation: "blogFadeUp 0.6s ease both",
         animationDelay: "0.1s",
@@ -129,17 +130,18 @@ function PostCard({ post, index }: { post: Post; index: number }) {
   const [hovered, setHovered] = useState(false);
   return (
     <Link
+      className="blog-post-card"
       href={`/blog/${post.slug}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         display: "flex", flexDirection: "column",
         background: "#fff",
-        border: `1.5px solid ${hovered ? "rgba(59,130,246,0.35)" : "#e5e7eb"}`,
+        border: `1px solid ${hovered ? "rgba(59,130,246,0.35)" : "rgba(226,232,240,0.95)"}`,
         borderRadius: 16,
         overflow: "hidden",
         textDecoration: "none",
-        boxShadow: hovered ? "0 8px 32px rgba(59,130,246,0.12)" : "0 2px 8px rgba(0,0,0,0.04)",
+        boxShadow: hovered ? "0 10px 30px rgba(37,99,235,0.12)" : "0 2px 12px rgba(15,23,42,0.045)",
         transform: hovered ? "translateY(-2px)" : "translateY(0)",
         transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
         animation: `blogFadeUp 0.5s ease both`,
@@ -217,9 +219,9 @@ const ALL_CATEGORIES: (Category | "all")[] = ["all", "noticias", "dicas", "edita
 const FILTER_LABELS: Record<string, string> = {
   all: "Todos",
   noticias: "Notícias",
-  dicas: "Dicas de Estudo",
-  edital: "Edital & Legislação",
-  concurso: "Concurso & Vagas",
+  dicas: "Dicas de estudo",
+  edital: "Edital e legislação",
+  concurso: "Concurso e vagas",
 };
 const PAGE_SIZE = 6;
 
@@ -264,6 +266,31 @@ export default function BlogPage() {
         * { box-sizing: border-box; }
         body { background: #fff; }
         .blog-search:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+        .blog-featured-card,
+        .blog-post-card,
+        .blog-filter-button,
+        .blog-load-more {
+          outline: none;
+        }
+        .blog-featured-card:focus-visible,
+        .blog-post-card:focus-visible,
+        .blog-filter-button:focus-visible,
+        .blog-load-more:focus-visible {
+          outline: 3px solid rgba(59,130,246,0.18);
+          outline-offset: 4px;
+        }
+        .blog-filter-button:active,
+        .blog-load-more:active {
+          transform: scale(0.99);
+        }
+        .blog-filter-button:not(.is-active):hover {
+          border-color: #9ca3af !important;
+          color: #111827 !important;
+        }
+        .blog-load-more:hover {
+          background: rgba(37,99,235,0.06) !important;
+          border-color: #2563eb !important;
+        }
         @media (max-width: 700px) {
           .featured-grid { grid-template-columns: 1fr !important; }
           .featured-cover { min-height: 200px !important; }
@@ -343,7 +370,7 @@ export default function BlogPage() {
                   width: "100%", padding: "13px 16px 13px 44px",
                   fontSize: 15, color: "#111827",
                   background: "#fff",
-                  border: "1.5px solid #e5e7eb", borderRadius: 12,
+                  border: "1px solid rgba(226,232,240,0.95)", borderRadius: 12,
                   transition: "border-color 0.2s, box-shadow 0.2s",
                 }}
               />
@@ -379,6 +406,7 @@ export default function BlogPage() {
                 const color = cat !== "all" ? CATEGORY_COLORS[cat as Category] : null;
                 return (
                   <button
+                    className={`blog-filter-button ${isActive ? "is-active" : ""}`}
                     key={cat}
                     onClick={() => handleCategoryChange(cat)}
                     style={{
@@ -386,13 +414,11 @@ export default function BlogPage() {
                       fontSize: 13, fontWeight: isActive ? 700 : 500,
                       color: isActive ? (color ? color.text : "#2563eb") : "#6b7280",
                       background: isActive ? (color ? color.bg : "rgba(37,99,235,0.1)") : "transparent",
-                      border: `1.5px solid ${isActive ? (color ? color.dot + "55" : "rgba(37,99,235,0.35)") : "#e5e7eb"}`,
+                      border: `1px solid ${isActive ? (color ? color.dot + "55" : "rgba(37,99,235,0.35)") : "rgba(226,232,240,0.95)"}`,
                       padding: "7px 16px", borderRadius: 980,
                       cursor: "pointer",
                       transition: "all 0.2s",
                     }}
-                    onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.borderColor = "#9ca3af"; e.currentTarget.style.color = "#111827"; } }}
-                    onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.color = "#6b7280"; } }}
                   >
                     {FILTER_LABELS[cat]}
                   </button>
@@ -431,17 +457,16 @@ export default function BlogPage() {
                 {hasMore && (
                   <div style={{ textAlign: "center", marginTop: 48 }}>
                     <button
+                      className="blog-load-more"
                       onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
                       style={{
                         fontSize: 15, fontWeight: 600, color: "#2563eb",
                         background: "transparent",
-                        border: "1.5px solid rgba(37,99,235,0.35)",
+                        border: "1px solid rgba(37,99,235,0.35)",
                         padding: "13px 32px", borderRadius: 980,
                         cursor: "pointer",
                         transition: "background 0.2s, border-color 0.2s",
                       }}
-                      onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(37,99,235,0.06)"; e.currentTarget.style.borderColor = "#2563eb"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(37,99,235,0.35)"; }}
                     >
                       Carregar mais posts
                     </button>

@@ -29,20 +29,20 @@ const EMPTY_FILTERS: FilterValue = {
 
 const STATUS_COPY: Record<string, { emptyTitle: string; emptyDescription: string }> = {
   wrong: {
-    emptyTitle: "Voce ainda nao tem questoes erradas para revisar.",
-    emptyDescription: "Continue praticando. Quando errar uma questao, ela aparecera aqui.",
+    emptyTitle: "Você ainda não tem questões erradas para revisar.",
+    emptyDescription: "Continue praticando. Quando errar uma questão, ela aparecerá aqui.",
   },
   favorites: {
-    emptyTitle: "Voce ainda nao marcou nenhuma questao como favorita.",
-    emptyDescription: "Use o botao Favoritar em uma questao para montar sua lista de revisao.",
+    emptyTitle: "Você ainda não marcou nenhuma questão como favorita.",
+    emptyDescription: "Use o botão Favoritar em uma questão para montar sua lista de revisão.",
   },
   answered: {
-    emptyTitle: "Voce ainda nao respondeu questoes com esses filtros.",
-    emptyDescription: "Volte para todas as questoes e comece uma sessao de pratica.",
+    emptyTitle: "Você ainda não respondeu questões com esses filtros.",
+    emptyDescription: "Volte para todas as questões e comece uma sessão de prática.",
   },
   unanswered: {
-    emptyTitle: "Nao ha questoes nao respondidas com os filtros atuais.",
-    emptyDescription: "Limpe os filtros ou escolha outra materia, banca ou ano.",
+    emptyTitle: "Não há questões não respondidas com os filtros atuais.",
+    emptyDescription: "Limpe os filtros ou escolha outra matéria, banca ou ano.",
   },
 };
 
@@ -77,8 +77,8 @@ function filterQuestions(questions: SoldadoQuestion[], filters: FilterValue, pro
 function getModeCopy(status: string) {
   return (
     STATUS_COPY[status] ?? {
-      emptyTitle: "Nenhuma questao encontrada com os filtros atuais.",
-      emptyDescription: "Limpe os filtros ou ajuste materia, banca, ano e status para continuar praticando.",
+      emptyTitle: "Nenhuma questão encontrada com os filtros atuais.",
+      emptyDescription: "Limpe os filtros ou ajuste matéria, banca, ano e status para continuar praticando.",
     }
   );
 }
@@ -202,8 +202,8 @@ export function QuestionPractice({
 
   return (
     <main style={{ background: "#f8faff", minHeight: "100vh" }}>
-      <section className="practice-body" style={{ padding: "16px 24px 72px" }}>
-        <div className="practice-content" style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 12 }}>
+      <section className="practice-body" style={{ padding: "18px 24px 78px" }}>
+        <div className="practice-content" style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 14 }}>
           <QuestionFilters subjects={subjects} topics={topicOptions} boards={boards} years={years} value={filters} onChange={handleFilterChange} />
 
           {(canContinueFromLast || filters.topic || hasActiveFilters) && (
@@ -215,7 +215,7 @@ export function QuestionPractice({
               )}
               {filters.topic && (
                 <button type="button" onClick={() => handleFilterChange({ ...filters, topic: "" })} style={secondaryButtonStyle}>
-                  Limpar topico
+                  Limpar tópico
                 </button>
               )}
               {hasActiveFilters && (
@@ -240,6 +240,7 @@ export function QuestionPractice({
               <QuestionNavigator
                 currentIndex={currentIndex}
                 total={filteredQuestions.length}
+                hasAnswered={selectedAnswer !== null}
                 onPrevious={() => goToQuestion(Math.max(0, currentIndex - 1))}
                 onNext={() => goToQuestion(Math.min(filteredQuestions.length - 1, currentIndex + 1))}
               />
@@ -248,11 +249,11 @@ export function QuestionPractice({
             <section
               style={{
                 background: "#fff",
-                border: "1.5px solid #e5e7eb",
-                borderRadius: 18,
+                border: "1px solid rgba(226,232,240,0.95)",
+                borderRadius: 16,
                 padding: "42px 26px",
                 textAlign: "center",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+                boxShadow: "0 2px 14px rgba(15,23,42,0.045)",
               }}
             >
               <h2 style={{ fontSize: 24, fontWeight: 850, color: "#111827", margin: "0 0 10px" }}>
@@ -263,11 +264,11 @@ export function QuestionPractice({
               </p>
               <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
                 <button type="button" onClick={clearFilters} style={primaryButtonStyle}>
-                  Ver todas as questoes
+                  Ver todas as questões
                 </button>
                 {filters.topic && (
                   <button type="button" onClick={() => handleFilterChange({ ...filters, topic: "" })} style={secondaryButtonStyle}>
-                    Limpar topico
+                    Limpar tópico
                   </button>
                 )}
                 {filters.status && !filters.topic && (
@@ -283,18 +284,20 @@ export function QuestionPractice({
       <style>{`
         @media (max-width: 640px) {
           .practice-body {
-            padding: 8px 8px 52px !important;
+            padding: 14px 12px 56px !important;
           }
           .practice-content {
-            gap: 8px !important;
+            gap: 12px !important;
           }
           .practice-filter-actions {
             display: grid !important;
             grid-template-columns: 1fr;
             width: 100%;
+            gap: 8px !important;
           }
           .practice-filter-actions button {
             width: 100%;
+            min-height: 44px !important;
           }
         }
       `}</style>
@@ -303,7 +306,7 @@ export function QuestionPractice({
 }
 
 const secondaryButtonStyle: React.CSSProperties = {
-  border: "1.5px solid #d1d5db",
+  border: "1px solid #d9e0ea",
   background: "#fff",
   color: "#374151",
   borderRadius: 980,

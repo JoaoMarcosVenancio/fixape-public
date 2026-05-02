@@ -3,10 +3,10 @@ import { StaticPageShell } from "@/components/site/SiteChrome";
 
 export default function SoldadoPmpePage() {
   const items = [
-    "Lingua Portuguesa",
-    "Historia de Pernambuco",
-    "Raciocinio Logico",
-    "Informatica",
+    "Língua Portuguesa",
+    "História de Pernambuco",
+    "Raciocínio Lógico",
+    "Informática",
     "Direito Constitucional",
     "Direitos Humanos e Legislacao",
   ];
@@ -52,7 +52,7 @@ export default function SoldadoPmpePage() {
                 boxShadow: "0 4px 24px rgba(59,130,246,0.4)",
               }}
             >
-              Ver materias
+              Ver matérias
             </Link>
           </div>
         </section>
@@ -63,14 +63,14 @@ export default function SoldadoPmpePage() {
               Uma trilha enxuta para a prova de Soldado.
             </h2>
             <p style={{ fontSize: 16, color: "#6b7280", lineHeight: 1.7, margin: "0 auto 42px", maxWidth: 650, textAlign: "center" }}>
-              A proposta e reduzir dispersao: abrir o site, escolher o assunto do edital e resolver questoes em sessoes curtas.
-              A funcionalidade de questoes entra na proxima fase.
+              A proposta é reduzir dispersão: abrir o site, escolher o assunto do edital e resolver questões em sessões curtas.
+              A funcionalidade de questões entra na próxima fase.
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
               {items.map((item) => (
-                <div key={item} style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "20px 22px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+                <div key={item} style={{ background: "#fff", border: "1px solid rgba(226,232,240,0.95)", borderRadius: 16, padding: "20px 22px", boxShadow: "0 2px 12px rgba(15,23,42,0.045)" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: "#111827" }}>{item}</div>
-                  <div style={{ fontSize: 13, color: "#9ca3af", marginTop: 6 }}>Questoes e revisao por topico</div>
+                  <div style={{ fontSize: 13, color: "#9ca3af", marginTop: 6 }}>Questões e revisão por tópico</div>
                 </div>
               ))}
             </div>

@@ -3,9 +3,9 @@ import { StaticPageShell } from "@/components/site/SiteChrome";
 
 export default function OficialPmpePage() {
   const pillars = [
-    "Conteudo programatico separado por assunto",
-    "Pratica rapida para rotina diaria",
-    "Revisao de erros e pontos fracos",
+    "Conteúdo programático separado por assunto",
+    "Prática rápida para rotina diária",
+    "Revisão de erros e pontos fracos",
     "Acompanhamento de progresso no navegador",
   ];
 
@@ -57,11 +57,11 @@ export default function OficialPmpePage() {
         <section style={{ background: "#f8faff", padding: "80px 24px", borderTop: "1px solid #e8edf8", borderBottom: "1px solid #e8edf8" }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 800, letterSpacing: "-1.2px", color: "#111827", margin: "0 0 38px", textAlign: "center" }}>
-              Estrutura preservada para evolucao posterior.
+              Estrutura preservada para evolução posterior.
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
               {pillars.map((item) => (
-                <div key={item} style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "24px 22px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+                <div key={item} style={{ background: "#fff", border: "1px solid rgba(226,232,240,0.95)", borderRadius: 16, padding: "24px 22px", boxShadow: "0 2px 12px rgba(15,23,42,0.045)" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: "#111827", lineHeight: 1.45 }}>{item}</div>
                 </div>
               ))}

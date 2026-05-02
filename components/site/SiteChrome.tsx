@@ -4,6 +4,7 @@ const linkStyle: React.CSSProperties = {
   fontSize: 14,
   color: "#6b7280",
   textDecoration: "none",
+  transition: "color 0.18s ease",
 };
 
 export function SiteHeader() {
@@ -16,7 +17,7 @@ export function SiteHeader() {
         background: "rgba(255,255,255,0.88)",
         backdropFilter: "blur(20px) saturate(180%)",
         WebkitBackdropFilter: "blur(20px) saturate(180%)",
-        borderBottom: "1px solid rgba(226,232,240,0.9)",
+        borderBottom: "1px solid rgba(226,232,240,0.92)",
         boxShadow: "0 1px 0 rgba(255,255,255,0.7), 0 8px 24px rgba(15,23,42,0.035)",
       }}
     >
@@ -34,6 +35,7 @@ export function SiteHeader() {
         }}
       >
         <Link
+          className="site-brand-link"
           href="/"
           style={{
             fontWeight: 850,
@@ -75,6 +77,7 @@ export function SiteHeader() {
               borderRadius: 980,
               textDecoration: "none",
               boxShadow: "0 8px 20px rgba(37,99,235,0.24)",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
             }}
           >
             Come&ccedil;ar quest&otilde;es
@@ -82,9 +85,29 @@ export function SiteHeader() {
         </div>
       </div>
       <style>{`
+        .site-brand-link,
+        .site-header-links a {
+          outline: none;
+        }
+        .site-header-links a:not(.site-header-cta):hover {
+          color: #111827 !important;
+        }
+        .site-header-cta:hover {
+          transform: translateY(-1px);
+          filter: saturate(1.05);
+        }
+        .site-header-cta:active {
+          transform: translateY(0) scale(0.99);
+        }
+        .site-brand-link:focus-visible,
+        .site-header-links a:focus-visible {
+          outline: 3px solid rgba(59,130,246,0.20);
+          outline-offset: 4px;
+          border-radius: 10px;
+        }
         @media (max-width: 640px) {
           .site-header-inner {
-            min-height: 48px !important;
+            min-height: 52px !important;
             padding: 0 14px !important;
             gap: 12px !important;
           }
@@ -104,7 +127,7 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer style={{ background: "#fff", padding: "28px 24px", borderTop: "1px solid #e5e7eb" }}>
+    <footer style={{ background: "#fff", padding: "28px 24px", borderTop: "1px solid rgba(226,232,240,0.92)" }}>
       <div
         style={{
           maxWidth: 960,
@@ -120,20 +143,34 @@ export function SiteFooter() {
           PasseiPMPE - PMPE Soldado na web - 2026
         </p>
         <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
-          <Link href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="site-footer-link" href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Blog
           </Link>
-          <Link href="/progresso" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="site-footer-link" href="/progresso" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Progresso
           </Link>
-          <Link href="/privacidade" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="site-footer-link" href="/privacidade" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Privacidade
           </Link>
-          <Link href="/termos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="site-footer-link" href="/termos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
             Termos
           </Link>
         </div>
       </div>
+      <style>{`
+        .site-footer-link {
+          transition: color 0.18s ease;
+          outline: none;
+        }
+        .site-footer-link:hover {
+          color: #111827 !important;
+        }
+        .site-footer-link:focus-visible {
+          outline: 3px solid rgba(59,130,246,0.18);
+          outline-offset: 4px;
+          border-radius: 8px;
+        }
+      `}</style>
     </footer>
   );
 }

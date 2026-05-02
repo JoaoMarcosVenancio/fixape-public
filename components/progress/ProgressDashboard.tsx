@@ -22,14 +22,14 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
   const bySubject = useMemo(() => calculateProgressBySubject(questions, progress), [questions, progress]);
 
   function handleClearProgress() {
-    const confirmed = window.confirm("Tem certeza que deseja zerar seu progresso local? Esta acao nao pode ser desfeita.");
+    const confirmed = window.confirm("Tem certeza que deseja zerar seu progresso local? Esta ação não pode ser desfeita.");
     if (!confirmed) return;
     setProgress(clearProgress());
   }
 
   return (
     <main style={{ background: "#f8faff", minHeight: "100vh" }}>
-      <section className="progress-hero" style={{ background: "#fff", borderBottom: "1px solid #e8edf8", padding: "48px 24px 30px" }}>
+      <section className="progress-hero" style={{ background: "#fff", borderBottom: "1px solid rgba(226,232,240,0.92)", padding: "48px 24px 30px" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2563eb", margin: "0 0 12px" }}>
             Progresso PMPE Soldado
@@ -38,7 +38,7 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
             Seu desempenho neste navegador.
           </h1>
           <p className="progress-description" style={{ fontSize: 17, color: "#6b7280", lineHeight: 1.65, maxWidth: 700, margin: 0 }}>
-            As informacoes abaixo ficam salvas em localStorage. Nao ha login, servidor ou sincronizacao nesta versao estatica.
+            As informações abaixo ficam salvas em localStorage. Não há login, servidor ou sincronização nesta versão estática.
           </p>
         </div>
       </section>
@@ -60,28 +60,28 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
             ))}
           </div>
 
-          <section className="progress-actions-card" style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: 18, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+          <section className="progress-actions-card" style={{ background: "#fff", border: "1px solid rgba(226,232,240,0.95)", borderRadius: 16, padding: 18, boxShadow: "0 2px 14px rgba(15,23,42,0.045)" }}>
             <div className="progress-actions" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <Link href={buildQuestionsUrl()} style={primaryLinkStyle}>
-                Continuar questoes
+              <Link className="progress-primary-action" href={buildQuestionsUrl()} style={primaryLinkStyle}>
+                Continuar questões
               </Link>
-              <Link href={buildQuestionsUrl({ status: "wrong" })} style={secondaryLinkStyle}>
+              <Link className="progress-secondary-action" href={buildQuestionsUrl({ status: "wrong" })} style={secondaryLinkStyle}>
                 Revisar erros
               </Link>
-              <Link href={buildQuestionsUrl({ status: "favorites" })} style={secondaryLinkStyle}>
+              <Link className="progress-secondary-action" href={buildQuestionsUrl({ status: "favorites" })} style={secondaryLinkStyle}>
                 Ver favoritas
               </Link>
-              <button type="button" onClick={handleClearProgress} style={dangerButtonStyle}>
+              <button className="progress-danger-action" type="button" onClick={handleClearProgress} style={dangerButtonStyle}>
                 Zerar progresso
               </button>
             </div>
           </section>
 
-          <section className="progress-subjects-card" style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 16, padding: "26px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-            <h2 style={{ fontSize: 20, fontWeight: 850, color: "#111827", margin: "0 0 18px" }}>Progresso por materia</h2>
+          <section className="progress-subjects-card" style={{ background: "#fff", border: "1px solid rgba(226,232,240,0.95)", borderRadius: 16, padding: "26px", boxShadow: "0 2px 14px rgba(15,23,42,0.045)" }}>
+            <h2 style={{ fontSize: 20, fontWeight: 850, color: "#111827", margin: "0 0 18px" }}>Progresso por matéria</h2>
             <div className="progress-subject-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
               {bySubject.map((subject) => (
-                <article key={subject.subject} style={{ border: "1.5px solid #e5e7eb", borderRadius: 14, padding: 16 }}>
+                <article key={subject.subject} style={{ border: "1px solid rgba(226,232,240,0.95)", borderRadius: 14, padding: 16, background: "#fff" }}>
                   <h3 style={{ fontSize: 16, fontWeight: 850, color: "#111827", margin: "0 0 12px", lineHeight: 1.35 }}>
                     {getSubjectDisplayName(subject.subject)}
                   </h3>
@@ -105,13 +105,13 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
                     />
                   </div>
                   <div className="progress-subject-actions" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
-                    <Link href={buildQuestionsUrl({ materia: subject.subject })} style={smallLinkStyle}>
-                      Estudar materia
+                    <Link className="progress-small-action" href={buildQuestionsUrl({ materia: subject.subject })} style={smallLinkStyle}>
+                      Estudar matéria
                     </Link>
-                    <Link href={buildQuestionsUrl({ materia: subject.subject, status: "wrong" })} style={smallLinkStyle}>
+                    <Link className="progress-small-action" href={buildQuestionsUrl({ materia: subject.subject, status: "wrong" })} style={smallLinkStyle}>
                       Revisar erros
                     </Link>
-                    <Link href={buildQuestionsUrl({ materia: subject.subject, status: "favorites" })} style={smallLinkStyle}>
+                    <Link className="progress-small-action" href={buildQuestionsUrl({ materia: subject.subject, status: "favorites" })} style={smallLinkStyle}>
                       Ver favoritas
                     </Link>
                   </div>
@@ -122,6 +122,39 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
         </div>
       </section>
       <style>{`
+        .progress-primary-action,
+        .progress-secondary-action,
+        .progress-danger-action,
+        .progress-small-action {
+          transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+          outline: none;
+        }
+        .progress-primary-action:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 8px 18px rgba(37,99,235,0.20) !important;
+        }
+        .progress-secondary-action:hover,
+        .progress-small-action:hover {
+          border-color: rgba(37,99,235,0.34) !important;
+          background: rgba(37,99,235,0.04) !important;
+        }
+        .progress-danger-action:hover {
+          border-color: rgba(220,38,38,0.38) !important;
+          background: rgba(220,38,38,0.035) !important;
+        }
+        .progress-primary-action:active,
+        .progress-secondary-action:active,
+        .progress-danger-action:active,
+        .progress-small-action:active {
+          transform: scale(0.99);
+        }
+        .progress-primary-action:focus-visible,
+        .progress-secondary-action:focus-visible,
+        .progress-danger-action:focus-visible,
+        .progress-small-action:focus-visible {
+          outline: 3px solid rgba(59,130,246,0.18);
+          outline-offset: 3px;
+        }
         @media (max-width: 640px) {
           .progress-hero {
             padding: 32px 16px 24px !important;
@@ -168,7 +201,7 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
 
 function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <div style={{ background: "#f8faff", border: "1px solid #e8edf8", borderRadius: 10, padding: "10px 12px" }}>
+    <div style={{ background: "#f8faff", border: "1px solid rgba(226,232,240,0.9)", borderRadius: 12, padding: "10px 12px" }}>
       <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>{label}</div>
       <div style={{ fontSize: 18, fontWeight: 850, color: "#111827" }}>{value}</div>
     </div>
@@ -177,10 +210,10 @@ function Metric({ label, value }: { label: string; value: number }) {
 
 const metricCardStyle: React.CSSProperties = {
   background: "#fff",
-  border: "1.5px solid #e5e7eb",
+  border: "1px solid rgba(226,232,240,0.95)",
   borderRadius: 16,
   padding: "20px 18px",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+  boxShadow: "0 2px 14px rgba(15,23,42,0.045)",
 };
 
 const primaryLinkStyle: React.CSSProperties = {
@@ -195,20 +228,22 @@ const primaryLinkStyle: React.CSSProperties = {
   fontSize: 14,
   fontWeight: 800,
   textDecoration: "none",
+  boxShadow: "0 8px 18px rgba(37,99,235,0.14)",
 };
 
 const secondaryLinkStyle: React.CSSProperties = {
   ...primaryLinkStyle,
   color: "#374151",
   background: "#fff",
-  border: "1.5px solid #d1d5db",
+  border: "1px solid #d9e0ea",
+  boxShadow: "none",
 };
 
 const dangerButtonStyle: React.CSSProperties = {
   minHeight: 48,
   color: "#b91c1c",
   background: "#fff",
-  border: "1.5px solid rgba(220,38,38,0.28)",
+  border: "1px solid rgba(220,38,38,0.28)",
   borderRadius: 980,
   padding: "10px 18px",
   fontSize: 14,
@@ -223,7 +258,7 @@ const smallLinkStyle: React.CSSProperties = {
   minHeight: 40,
   color: "#2563eb",
   background: "#fff",
-  border: "1.5px solid rgba(37,99,235,0.24)",
+  border: "1px solid rgba(37,99,235,0.24)",
   borderRadius: 980,
   padding: "7px 12px",
   fontSize: 12,

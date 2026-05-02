@@ -19,7 +19,7 @@ export default function PrivacidadePage() {
           ["Sem envio para servidor", "No MVP estático, nenhum progresso de estudo é enviado para servidores. Também não há login ou cadastro obrigatório."],
           ["Contato e atualizações", "Esta política será revisada antes de qualquer mudança que envolva novos dados, conta de usuário ou sincronização online."],
         ].map(([title, text]) => (
-          <section key={title} style={{ background: "#f8faff", border: "1px solid #e8edf8", borderRadius: 18, padding: "24px 26px", marginBottom: 14 }}>
+          <section key={title} style={{ background: "#f8faff", border: "1px solid rgba(226,232,240,0.95)", borderRadius: 16, padding: "24px 26px", marginBottom: 14 }}>
             <h2 style={{ fontSize: 18, fontWeight: 800, color: "#111827", margin: "0 0 8px" }}>{title}</h2>
             <p style={{ fontSize: 15, color: "#6b7280", lineHeight: 1.7, margin: 0 }}>{text}</p>
           </section>

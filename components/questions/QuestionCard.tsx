@@ -28,16 +28,16 @@ export function QuestionCard({
       className="question-card"
       style={{
         background: "#fff",
-        border: "1px solid #e3e8ef",
-        borderRadius: 14,
-        padding: 18,
-        boxShadow: "0 1px 10px rgba(15,23,42,0.045)",
+        border: "1px solid rgba(226,232,240,0.95)",
+        borderRadius: 16,
+        padding: 20,
+        boxShadow: "0 2px 14px rgba(15,23,42,0.045)",
       }}
     >
-      <header style={{ borderBottom: "1px solid #f1f4f8", paddingBottom: 10, marginBottom: 12 }}>
+      <header className="question-card-header" style={{ borderBottom: "1px solid #f1f4f8", paddingBottom: 12, marginBottom: 14 }}>
         <div className="question-card-meta" style={{ display: "flex", justifyContent: "space-between", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
           <span style={{ fontSize: 11, fontWeight: 750, color: "#2563eb", lineHeight: 1.4 }}>
-            Questao {currentIndex + 1} de {total}
+            Questão {currentIndex + 1} de {total}
           </span>
           <div className="question-card-actions" style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
             <span style={{ fontSize: 11, color: "#7b8494", lineHeight: 1.4 }}>
@@ -52,8 +52,8 @@ export function QuestionCard({
                 background: isFavorite ? "rgba(245,158,11,0.10)" : "#fbfdff",
                 color: isFavorite ? "#92400e" : "#6b7280",
                 borderRadius: 980,
-                minHeight: 30,
-                padding: "5px 10px",
+                minHeight: 32,
+                padding: "6px 11px",
                 fontSize: 12,
                 fontWeight: 700,
                 cursor: "pointer",
@@ -69,15 +69,16 @@ export function QuestionCard({
         <p className="question-card-topic" style={{ fontSize: 12, color: "#7b8494", lineHeight: 1.45, margin: 0 }}>{question.topico}</p>
       </header>
 
-      <p className="question-card-enunciation" style={{ fontSize: 14, fontWeight: 400, lineHeight: 1.62, color: "#1f2937", margin: "0 0 12px", whiteSpace: "pre-wrap" }}>
+      <p className="question-card-enunciation" style={{ fontSize: 15, fontWeight: 400, lineHeight: 1.66, color: "#1f2937", margin: "0 0 16px", whiteSpace: "pre-wrap" }}>
         {question.enunciado}
       </p>
 
-      <div style={{ display: "grid", gap: 6 }}>
+      <div className="question-options-list" style={{ display: "grid", gap: 8 }}>
         {ALTERNATIVE_KEYS.map((key) => (
           <button
             key={key}
             type="button"
+            className="question-option-button"
             onClick={() => onSelectAnswer(key)}
             disabled={selectedAnswer !== null}
             style={getAlternativeStyle({ key, selectedAnswer, correctAnswer: question.gabarito })}
@@ -108,8 +109,12 @@ export function QuestionCard({
       <style>{`
         @media (max-width: 640px) {
           .question-card {
-            border-radius: 14px !important;
-            padding: 14px 12px !important;
+            border-radius: 16px !important;
+            padding: 18px 14px !important;
+          }
+          .question-card-header {
+            padding-bottom: 12px !important;
+            margin-bottom: 16px !important;
           }
           .question-card-meta,
           .question-card-actions {
@@ -119,14 +124,32 @@ export function QuestionCard({
             width: 100%;
             justify-content: space-between !important;
           }
+          .question-card-actions button {
+            min-height: 38px !important;
+          }
           .question-card-title {
             font-size: 17px !important;
             line-height: 1.24 !important;
           }
           .question-card-enunciation {
+            font-size: 15px !important;
+            line-height: 1.66 !important;
+            margin-bottom: 16px !important;
+          }
+          .question-options-list {
+            gap: 9px !important;
+          }
+          .question-option-button {
+            min-height: 54px !important;
+            padding: 12px 12px !important;
             font-size: 14px !important;
-            line-height: 1.56 !important;
-            margin-bottom: 12px !important;
+          }
+          .question-option-button:active {
+            transform: scale(0.995);
+          }
+          .question-option-button:focus-visible {
+            outline: 3px solid rgba(59,130,246,0.18);
+            outline-offset: 2px;
           }
         }
       `}</style>
@@ -149,7 +172,7 @@ function getAlternativeStyle({
 
   return {
     width: "100%",
-    minHeight: 46,
+    minHeight: 50,
     display: "flex",
     alignItems: "flex-start",
     gap: 10,
@@ -158,7 +181,7 @@ function getAlternativeStyle({
     background: isCorrect ? "rgba(22,163,74,0.075)" : isWrongSelection ? "rgba(220,38,38,0.065)" : "#fbfdff",
     color: isCorrect ? "#166534" : isWrongSelection ? "#991b1b" : "#374151",
     borderRadius: 12,
-    padding: "9px 12px",
+    padding: "11px 12px",
     fontSize: 14,
     fontWeight: isCorrect || isWrongSelection ? 600 : 400,
     cursor: answered ? "default" : "pointer",
