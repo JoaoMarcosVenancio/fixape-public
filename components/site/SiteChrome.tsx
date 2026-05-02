@@ -127,48 +127,61 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer style={{ background: "#fff", padding: "28px 24px", borderTop: "1px solid rgba(226,232,240,0.92)" }}>
+    <footer style={{ background: "#fff", padding: "22px 24px", borderTop: "1px solid rgba(226,232,240,0.92)" }}>
       <div
+        className="site-footer-inner"
         style={{
           maxWidth: 960,
           margin: "0 auto",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          gap: 16,
+          gap: 18,
           flexWrap: "wrap",
         }}
       >
-        <p style={{ fontSize: 13, color: "#9ca3af", margin: 0 }}>
+        <p style={{ fontSize: 13, lineHeight: 1.5, color: "#8b95a5", margin: 0 }}>
           PasseiPMPE - PMPE Soldado na web - 2026
         </p>
-        <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
-          <Link className="site-footer-link" href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+        <div className="site-footer-links" style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <Link className="site-footer-link" href="/blog" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none", padding: "6px 8px", borderRadius: 8 }}>
             Blog
           </Link>
-          <Link className="site-footer-link" href="/progresso" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="site-footer-link" href="/progresso" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none", padding: "6px 8px", borderRadius: 8 }}>
             Progresso
           </Link>
-          <Link className="site-footer-link" href="/privacidade" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="site-footer-link" href="/privacidade" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none", padding: "6px 8px", borderRadius: 8 }}>
             Privacidade
           </Link>
-          <Link className="site-footer-link" href="/termos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none" }}>
+          <Link className="site-footer-link" href="/termos" style={{ fontSize: 13, color: "#6b7280", textDecoration: "none", padding: "6px 8px", borderRadius: 8 }}>
             Termos
           </Link>
         </div>
       </div>
       <style>{`
         .site-footer-link {
-          transition: color 0.18s ease;
+          transition: color 0.18s ease, background 0.18s ease;
           outline: none;
         }
         .site-footer-link:hover {
           color: #111827 !important;
+          background: rgba(15,23,42,0.035);
         }
         .site-footer-link:focus-visible {
           outline: 3px solid rgba(59,130,246,0.18);
-          outline-offset: 4px;
+          outline-offset: 2px;
           border-radius: 8px;
+        }
+        @media (max-width: 640px) {
+          .site-footer-inner {
+            justify-content: center !important;
+            text-align: center;
+            gap: 10px !important;
+          }
+          .site-footer-links {
+            justify-content: center !important;
+            gap: 2px !important;
+          }
         }
       `}</style>
     </footer>

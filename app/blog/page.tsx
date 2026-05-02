@@ -40,6 +40,7 @@ function CategoryBadge({ category }: { category: Category }) {
 /* ─── Featured post ──────────────────────────────────────────────── */
 function FeaturedPost({ post }: { post: Post }) {
   const [hovered, setHovered] = useState(false);
+  const color = CATEGORY_COLORS[post.category];
   return (
     <Link
       className="blog-featured-card"
@@ -52,33 +53,46 @@ function FeaturedPost({ post }: { post: Post }) {
         gap: 0,
         background: "#fff",
         border: `1px solid ${hovered ? "rgba(59,130,246,0.35)" : "rgba(226,232,240,0.95)"}`,
-        borderRadius: 20,
+        borderRadius: 18,
         overflow: "hidden",
         textDecoration: "none",
-        boxShadow: hovered ? "0 10px 34px rgba(37,99,235,0.12)" : "0 2px 14px rgba(15,23,42,0.045)",
-        transition: "border-color 0.25s, box-shadow 0.25s",
+        boxShadow: hovered ? "0 14px 34px rgba(15,23,42,0.08)" : "0 2px 14px rgba(15,23,42,0.045)",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
         animation: "blogFadeUp 0.6s ease both",
         animationDelay: "0.1s",
       }}
     >
       {/* Cover */}
-      <div style={{
-        background: post.coverGradient,
+      <div className="featured-cover" style={{
+        background: "linear-gradient(135deg,#f8faff 0%,#ffffff 100%)",
+        borderRight: "1px solid rgba(226,232,240,0.9)",
         minHeight: 320,
         position: "relative",
         overflow: "hidden",
       }}>
         <div style={{
-          position: "absolute", inset: 0,
-          background: "rgba(0,0,0,0.18)",
-          transition: "background 0.25s",
+          position: "absolute", inset: 28,
+          border: "1px solid rgba(226,232,240,0.95)",
+          borderRadius: 18,
+          background: "#fff",
+          boxShadow: "0 18px 42px rgba(15,23,42,0.07)",
         }} />
         <div style={{
-          position: "absolute", bottom: 20, left: 20,
-          fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
-          textTransform: "uppercase", color: "rgba(255,255,255,0.8)",
+          position: "absolute", top: 52, left: 52, right: 52,
+          display: "grid", gap: 12,
         }}>
-          Destaque
+          <span style={{ width: 44, height: 5, borderRadius: 980, background: color.dot }} />
+          <span style={{ width: "72%", height: 10, borderRadius: 980, background: "#e5eaf3" }} />
+          <span style={{ width: "88%", height: 10, borderRadius: 980, background: "#eef2f7" }} />
+          <span style={{ width: "58%", height: 10, borderRadius: 980, background: "#eef2f7" }} />
+        </div>
+        <div style={{
+          position: "absolute", bottom: 52, left: 52,
+          fontSize: 11, fontWeight: 800, letterSpacing: "0.1em",
+          textTransform: "uppercase", color: "#64748b",
+        }}>
+          Destaque editorial
         </div>
       </div>
 
@@ -96,7 +110,7 @@ function FeaturedPost({ post }: { post: Post }) {
         <p style={{ fontSize: 15, color: "#6b7280", lineHeight: 1.7, margin: "0 0 24px" }}>
           {post.summary}
         </p>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
           <div style={{
             width: 32, height: 32, borderRadius: "50%",
             background: "linear-gradient(135deg,#2563eb,#3b82f6)",
@@ -128,6 +142,7 @@ function FeaturedPost({ post }: { post: Post }) {
 /* ─── Post card ──────────────────────────────────────────────────── */
 function PostCard({ post, index }: { post: Post; index: number }) {
   const [hovered, setHovered] = useState(false);
+  const color = CATEGORY_COLORS[post.category];
   return (
     <Link
       className="blog-post-card"
@@ -138,10 +153,10 @@ function PostCard({ post, index }: { post: Post; index: number }) {
         display: "flex", flexDirection: "column",
         background: "#fff",
         border: `1px solid ${hovered ? "rgba(59,130,246,0.35)" : "rgba(226,232,240,0.95)"}`,
-        borderRadius: 16,
+        borderRadius: 14,
         overflow: "hidden",
         textDecoration: "none",
-        boxShadow: hovered ? "0 10px 30px rgba(37,99,235,0.12)" : "0 2px 12px rgba(15,23,42,0.045)",
+        boxShadow: hovered ? "0 12px 28px rgba(15,23,42,0.08)" : "0 2px 12px rgba(15,23,42,0.04)",
         transform: hovered ? "translateY(-2px)" : "translateY(0)",
         transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
         animation: `blogFadeUp 0.5s ease both`,
@@ -150,12 +165,16 @@ function PostCard({ post, index }: { post: Post; index: number }) {
     >
       {/* Cover */}
       <div style={{
-        background: post.coverGradient,
-        height: 160,
+        background: "#f8faff",
+        borderBottom: "1px solid rgba(226,232,240,0.85)",
+        height: 96,
         flexShrink: 0,
         position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.12)" }} />
+        <div style={{ position: "absolute", top: 20, left: 22, width: 38, height: 4, borderRadius: 980, background: color.dot }} />
+        <div style={{ position: "absolute", left: 22, right: 22, top: 40, height: 9, borderRadius: 980, background: "#e5eaf3" }} />
+        <div style={{ position: "absolute", left: 22, right: 72, top: 58, height: 9, borderRadius: 980, background: "#eef2f7" }} />
       </div>
 
       {/* Body */}
@@ -189,7 +208,7 @@ function PostCard({ post, index }: { post: Post; index: number }) {
         {/* Footer */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          paddingTop: 16, borderTop: "1px solid #f3f4f6", marginTop: "auto",
+          paddingTop: 14, borderTop: "1px solid rgba(226,232,240,0.8)", marginTop: "auto",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{
@@ -293,7 +312,11 @@ export default function BlogPage() {
         }
         @media (max-width: 700px) {
           .featured-grid { grid-template-columns: 1fr !important; }
-          .featured-cover { min-height: 200px !important; }
+          .featured-cover {
+            min-height: 180px !important;
+            border-right: 0 !important;
+            border-bottom: 1px solid rgba(226,232,240,0.9) !important;
+          }
         }
         @media (max-width: 900px) {
           .posts-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -310,13 +333,13 @@ export default function BlogPage() {
         <section style={{
           position: "relative", overflow: "hidden",
           background: "#fff",
-          padding: "80px 24px 64px",
-          borderBottom: "1px solid #e8edf8",
+          padding: "72px 24px 58px",
+          borderBottom: "1px solid rgba(226,232,240,0.92)",
         }}>
           <div style={{
             position: "absolute", top: "-20%", left: "50%", transform: "translateX(-50%)",
             width: 900, height: 500,
-            background: "radial-gradient(ellipse at 50% 10%, rgba(59,130,246,0.14) 0%, transparent 65%)",
+            background: "radial-gradient(ellipse at 50% 10%, rgba(59,130,246,0.08) 0%, transparent 64%)",
             pointerEvents: "none",
           }} />
           <div style={{ maxWidth: 780, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
@@ -328,8 +351,8 @@ export default function BlogPage() {
               Blog PasseiPMPE
             </p>
             <h1 style={{
-              fontSize: "clamp(34px, 6vw, 60px)", fontWeight: 800,
-              letterSpacing: "-2px", color: "#111827",
+              fontSize: "clamp(34px, 6vw, 56px)", fontWeight: 850,
+              letterSpacing: 0, color: "#111827",
               margin: "0 0 16px", lineHeight: 1.1,
               animation: "blogFadeUp 0.55s ease both", animationDelay: "0.12s",
             }}>

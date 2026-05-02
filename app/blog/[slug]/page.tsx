@@ -39,6 +39,7 @@ function CategoryBadge({ category }: { category: Category }) {
 }
 
 function RelatedCard({ post }: { post: Post }) {
+  const color = CATEGORY_COLORS[post.category];
   return (
     <Link
       className="related-card"
@@ -48,14 +49,16 @@ function RelatedCard({ post }: { post: Post }) {
         flexDirection: "column",
         background: "#fff",
         border: "1px solid rgba(226,232,240,0.95)",
-        borderRadius: 16,
+        borderRadius: 14,
         overflow: "hidden",
         textDecoration: "none",
-        boxShadow: "0 2px 12px rgba(15,23,42,0.045)",
+        boxShadow: "0 2px 12px rgba(15,23,42,0.04)",
       }}
     >
-      <div style={{ background: post.coverGradient, height: 120, flexShrink: 0, position: "relative" }}>
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.12)" }} />
+      <div style={{ background: "#f8faff", borderBottom: "1px solid rgba(226,232,240,0.85)", height: 88, flexShrink: 0, position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 20, left: 18, width: 34, height: 4, borderRadius: 980, background: color.dot }} />
+        <div style={{ position: "absolute", left: 18, right: 18, top: 40, height: 8, borderRadius: 980, background: "#e5eaf3" }} />
+        <div style={{ position: "absolute", left: 18, right: 58, top: 56, height: 8, borderRadius: 980, background: "#eef2f7" }} />
       </div>
       <div style={{ padding: "16px 18px" }}>
         <CategoryBadge category={post.category} />
@@ -98,7 +101,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         .post-cta:hover,
         .related-card:hover {
           transform: translateY(-1px);
-          box-shadow: 0 8px 24px rgba(37,99,235,0.12) !important;
+          box-shadow: 0 8px 24px rgba(15,23,42,0.08) !important;
         }
         .post-back-link:focus-visible,
         .post-cta:focus-visible,
@@ -113,14 +116,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       `}</style>
 
       <div style={{ background: "#fff", minHeight: "100vh" }}>
-        <div
-          style={{
-            background: post.coverGradient,
-            height: "clamp(220px, 35vw, 380px)",
+          <div
+            style={{
+            background: "linear-gradient(135deg,#f8faff 0%,#ffffff 100%)",
+            borderBottom: "1px solid rgba(226,232,240,0.92)",
+            height: "clamp(120px, 18vw, 180px)",
             position: "relative",
           }}
         >
-          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.22)" }} />
+          <div style={{ position: "absolute", left: "50%", bottom: 32, transform: "translateX(-50%)", width: "min(520px, calc(100% - 48px))", height: 1, background: "linear-gradient(90deg, transparent, rgba(37,99,235,0.32), transparent)" }} />
         </div>
 
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
@@ -156,7 +160,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               style={{
                 fontSize: "clamp(26px, 4vw, 44px)",
                 fontWeight: 800,
-                letterSpacing: "-1.2px",
+                letterSpacing: 0,
                 color: "#111827",
                 margin: "16px 0 20px",
                 lineHeight: 1.15,
@@ -202,8 +206,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <div
               style={{
                 marginTop: 48,
-                background: "linear-gradient(135deg, rgba(37,99,235,0.06) 0%, rgba(59,130,246,0.04) 100%)",
-                border: "1px solid rgba(59,130,246,0.18)",
+                background: "#f8faff",
+                border: "1px solid rgba(226,232,240,0.95)",
                 borderRadius: 16,
                 padding: "28px 32px",
                 display: "flex",
