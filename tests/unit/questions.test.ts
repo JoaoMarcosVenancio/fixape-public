@@ -122,6 +122,10 @@ describe("lib/questions — dados de Soldado", () => {
 
   it("monta URLs de questoes com filtros codificados", () => {
     expect(buildQuestionsUrl()).toBe("/questoes");
+    expect(buildQuestionsUrl({ mode: "new" })).toBe("/questoes?mode=new");
+    expect(buildQuestionsUrl({ mode: "review-errors" })).toBe("/questoes?mode=review-errors");
+    expect(buildQuestionsUrl({ mode: "favorites" })).toBe("/questoes?mode=favorites");
+    expect(buildQuestionsUrl({ mode: "favorites", materia: "Direito Constitucional" })).toBe("/questoes?mode=favorites&materia=Direito+Constitucional");
     expect(buildQuestionsUrl({ status: "wrong" })).toBe("/questoes?status=wrong");
     expect(buildQuestionsUrl({ materia: "Língua Portuguesa (Português)", topico: "Compreensão e interpretação de textos", status: "favorites" })).toBe(
       "/questoes?materia=L%C3%ADngua+Portuguesa+%28Portugu%C3%AAs%29&topico=Compreens%C3%A3o+e+interpreta%C3%A7%C3%A3o+de+textos&status=favorites"

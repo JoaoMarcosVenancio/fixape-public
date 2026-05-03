@@ -30,20 +30,6 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
 
   return (
     <main style={{ background: "#f8faff", minHeight: "100vh" }}>
-      <section className="progress-hero" style={{ background: "#fff", borderBottom: "1px solid rgba(226,232,240,0.92)", padding: "48px 24px 30px" }}>
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
-          <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2563eb", margin: "0 0 12px" }}>
-            Progresso PMPE Soldado
-          </p>
-          <h1 className="progress-title" style={{ fontSize: 48, lineHeight: 1.08, letterSpacing: 0, color: "#111827", margin: "0 0 16px", fontWeight: 850 }}>
-            Seu desempenho neste navegador.
-          </h1>
-          <p className="progress-description" style={{ fontSize: 17, color: "#6b7280", lineHeight: 1.65, maxWidth: 700, margin: 0 }}>
-            As informações abaixo ficam salvas em localStorage. Não há login, servidor ou sincronização nesta versão estática.
-          </p>
-        </div>
-      </section>
-
       <section className="progress-body" style={{ padding: "24px 24px 88px" }}>
         <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 18 }}>
           <section className="progress-summary-card" style={{ background: "#fff", border: "1px solid rgba(226,232,240,0.9)", borderRadius: 18, padding: 22, boxShadow: "0 10px 30px rgba(15,23,42,0.06)" }}>
@@ -61,7 +47,7 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
                     : "Resolva algumas questões para acompanhar acertos, erros, favoritas e desempenho por matéria neste navegador."}
                 </p>
               </div>
-              <Link className="progress-primary-action" href={buildQuestionsUrl()} style={primaryLinkStyle}>
+              <Link className="progress-primary-action" href={buildQuestionsUrl({ mode: "new" })} style={primaryLinkStyle}>
                 {hasProgress ? "Continuar questões" : "Começar questões"}
               </Link>
             </div>
@@ -88,10 +74,10 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
                 <p style={{ fontSize: 14, color: "#6b7280", lineHeight: 1.5, margin: 0 }}>Use estes filtros para retomar pontos importantes.</p>
               </div>
               <div className="progress-secondary-actions" style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end" }}>
-                <Link className="progress-secondary-action" href={buildQuestionsUrl({ status: "wrong" })} style={secondaryLinkStyle}>
+                <Link className="progress-secondary-action" href={buildQuestionsUrl({ mode: "review-errors" })} style={secondaryLinkStyle}>
                   Revisar erros
                 </Link>
-                <Link className="progress-secondary-action" href={buildQuestionsUrl({ status: "favorites" })} style={secondaryLinkStyle}>
+                <Link className="progress-secondary-action" href={buildQuestionsUrl({ mode: "favorites" })} style={secondaryLinkStyle}>
                   Ver favoritas
                 </Link>
               </div>
@@ -131,13 +117,13 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
                     />
                   </div>
                   <div className="progress-subject-actions" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
-                    <Link className="progress-small-action" href={buildQuestionsUrl({ materia: subject.subject })} style={smallLinkStyle}>
+                    <Link className="progress-small-action" href={buildQuestionsUrl({ mode: "new", materia: subject.subject })} style={smallLinkStyle}>
                       Estudar matéria
                     </Link>
-                    <Link className="progress-small-action" href={buildQuestionsUrl({ materia: subject.subject, status: "wrong" })} style={smallLinkStyle}>
+                    <Link className="progress-small-action" href={buildQuestionsUrl({ mode: "review-errors", materia: subject.subject })} style={smallLinkStyle}>
                       Revisar erros
                     </Link>
-                    <Link className="progress-small-action" href={buildQuestionsUrl({ materia: subject.subject, status: "favorites" })} style={smallLinkStyle}>
+                    <Link className="progress-small-action" href={buildQuestionsUrl({ mode: "favorites", materia: subject.subject })} style={smallLinkStyle}>
                       Ver favoritas
                     </Link>
                   </div>
@@ -182,17 +168,6 @@ export function ProgressDashboard({ questions }: { questions: SoldadoQuestion[] 
           outline-offset: 3px;
         }
         @media (max-width: 640px) {
-          .progress-hero {
-            padding: 32px 16px 24px !important;
-          }
-          .progress-title {
-            font-size: 32px !important;
-            line-height: 1.14 !important;
-          }
-          .progress-description {
-            font-size: 15px !important;
-            line-height: 1.6 !important;
-          }
           .progress-body {
             padding: 14px 12px 72px !important;
           }

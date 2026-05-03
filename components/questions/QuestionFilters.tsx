@@ -4,11 +4,11 @@ import { useState } from "react";
 import { getSubjectDisplayName } from "@/lib/questions/display";
 
 type FilterValue = {
+  mode: "new" | "review-errors" | "favorites" | "answered";
   subject: string;
   topic: string;
   board: string;
   year: string;
-  status: string;
 };
 
 export function QuestionFilters({
@@ -31,7 +31,7 @@ export function QuestionFilters({
   }
 
   const [open, setOpen] = useState(false);
-  const activeCount = [value.subject, value.topic, value.board, value.year, value.status].filter(Boolean).length;
+  const activeCount = [value.mode !== "new" ? value.mode : "", value.subject, value.topic, value.board, value.year].filter(Boolean).length;
 
   return (
     <section
@@ -67,7 +67,7 @@ export function QuestionFilters({
         <span style={{ display: "grid", gap: 3, minWidth: 0 }}>
           <strong style={{ fontSize: 14, fontWeight: 780 }}>Filtros</strong>
           <span style={{ fontSize: 12, color: "#6b7280" }}>
-            {activeCount > 0 ? `${activeCount} filtro${activeCount === 1 ? "" : "s"} ativo${activeCount === 1 ? "" : "s"}` : "Todas as questões"}
+            {activeCount > 0 ? `${activeCount} filtro${activeCount === 1 ? "" : "s"} ativo${activeCount === 1 ? "" : "s"}` : "Questões novas"}
           </span>
         </span>
         <span
@@ -95,11 +95,22 @@ export function QuestionFilters({
         className={`question-filter-grid ${open ? "is-open" : ""}`}
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(0, 1.35fr) minmax(0, 1.35fr) 0.8fr 0.8fr 0.9fr",
+          gridTemplateColumns: "0.9fr minmax(0, 1.35fr) minmax(0, 1.35fr) 0.8fr 0.8fr",
           gap: 9,
           marginTop: 0,
         }}
       >
+        <label style={{ display: "grid", gap: 5 }}>
+          <span style={filterLabelStyle}>
+            Modo
+          </span>
+          <select value={value.mode} onChange={(event) => updateFilter("mode", event.target.value)} style={selectStyle}>
+            <option value="new">Novas</option>
+            <option value="review-errors">Revisar erros</option>
+            <option value="favorites">Favoritas</option>
+          </select>
+        </label>
+
         <label style={{ display: "grid", gap: 5 }}>
           <span style={filterLabelStyle}>
             Matéria
@@ -158,19 +169,6 @@ export function QuestionFilters({
                 {year}
               </option>
             ))}
-          </select>
-        </label>
-
-        <label style={{ display: "grid", gap: 5 }}>
-          <span style={filterLabelStyle}>
-            Status
-          </span>
-          <select value={value.status} onChange={(event) => updateFilter("status", event.target.value)} style={selectStyle}>
-            <option value="">Todos</option>
-            <option value="unanswered">Não respondidas</option>
-            <option value="answered">Respondidas</option>
-            <option value="wrong">Erradas</option>
-            <option value="favorites">Favoritas</option>
           </select>
         </label>
       </div>

@@ -1,4 +1,5 @@
 type QuestionUrlFilters = {
+  mode?: string;
   materia?: string;
   topico?: string;
   banca?: string;
@@ -9,6 +10,7 @@ type QuestionUrlFilters = {
 export function buildQuestionsUrl(filters: QuestionUrlFilters = {}): string {
   const params = new URLSearchParams();
 
+  if (filters.mode) params.set("mode", filters.mode);
   if (filters.materia) params.set("materia", filters.materia);
   if (filters.topico) params.set("topico", filters.topico);
   if (filters.banca) params.set("banca", filters.banca);

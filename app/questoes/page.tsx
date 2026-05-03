@@ -9,7 +9,7 @@ export default function QuestoesPage() {
   const years = getYears();
 
   return (
-    <StaticPageShell>
+    <StaticPageShell showQuestionsCta={false}>
       <QuestionPractice questions={questions} subjects={subjects} boards={boards} years={years} />
     </StaticPageShell>
   );

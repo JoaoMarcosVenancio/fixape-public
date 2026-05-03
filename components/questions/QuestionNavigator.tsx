@@ -3,18 +3,24 @@
 export function QuestionNavigator({
   currentIndex,
   total,
+  showPrevious = true,
+  canGoPrevious,
+  canGoNext,
   hasAnswered,
   onPrevious,
   onNext,
 }: {
   currentIndex: number;
   total: number;
+  showPrevious?: boolean;
+  canGoPrevious?: boolean;
+  canGoNext?: boolean;
   hasAnswered: boolean;
   onPrevious: () => void;
   onNext: () => void;
 }) {
-  const previousDisabled = currentIndex === 0;
-  const nextDisabled = currentIndex >= total - 1;
+  const previousDisabled = canGoPrevious === undefined ? currentIndex === 0 : !canGoPrevious;
+  const nextDisabled = canGoNext === undefined ? currentIndex >= total - 1 : !canGoNext;
 
   return (
     <nav
@@ -34,9 +40,13 @@ export function QuestionNavigator({
         boxShadow: "0 1px 6px rgba(15,23,42,0.035)",
       }}
     >
-      <button className="question-nav-button" type="button" onClick={onPrevious} disabled={previousDisabled} style={buttonStyle({ disabled: previousDisabled, primary: false })}>
-        Anterior
-      </button>
+      {showPrevious ? (
+        <button className="question-nav-button" type="button" onClick={onPrevious} disabled={previousDisabled} style={buttonStyle({ disabled: previousDisabled, primary: false })}>
+          Anterior
+        </button>
+      ) : (
+        <span aria-hidden="true" />
+      )}
       <span className="question-navigator-count" style={{ fontSize: 12, color: "#7b8494", textAlign: "center", fontWeight: 650 }}>
         Questão {currentIndex + 1} de {total}
       </span>

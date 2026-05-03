@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { getOfficialTopicsForSubject } from "@/lib/questions/edital-topics";
 import { getQuestionTopicFilterValue } from "@/lib/questions/topic-mapping";
@@ -12,42 +13,56 @@ import { QuestionFilters } from "./QuestionFilters";
 import { QuestionNavigator } from "./QuestionNavigator";
 
 type FilterValue = {
+  mode: QuestionMode;
   subject: string;
   topic: string;
   board: string;
   year: string;
-  status: string;
 };
 
+type QuestionMode = "new" | "review-errors" | "favorites" | "answered";
+type StatusFilter = "unanswered" | "answered" | "wrong" | "favorites";
+
 const EMPTY_FILTERS: FilterValue = {
+  mode: "new",
   subject: "",
   topic: "",
   board: "",
   year: "",
-  status: "",
 };
 
-const STATUS_COPY: Record<string, { emptyTitle: string; emptyDescription: string }> = {
-  wrong: {
+const MODE_COPY: Record<QuestionMode, { emptyTitle: string; emptyDescription: string }> = {
+  new: {
+    emptyTitle: "Você concluiu as questões deste filtro.",
+    emptyDescription: "Não há novas questões disponíveis com os filtros atuais.",
+  },
+  "review-errors": {
     emptyTitle: "Você ainda não tem questões erradas para revisar.",
     emptyDescription: "Continue praticando. Quando errar uma questão, ela aparecerá aqui.",
   },
   favorites: {
-    emptyTitle: "Você ainda não marcou nenhuma questão como favorita.",
+    emptyTitle: "Você ainda não marcou questões favoritas.",
     emptyDescription: "Use o botão Favoritar em uma questão para montar sua lista de revisão.",
   },
   answered: {
     emptyTitle: "Você ainda não respondeu questões com esses filtros.",
     emptyDescription: "Volte para todas as questões e comece uma sessão de prática.",
   },
-  unanswered: {
-    emptyTitle: "Não há questões não respondidas com os filtros atuais.",
-    emptyDescription: "Limpe os filtros ou escolha outra matéria, banca ou ano.",
-  },
 };
 
-function isStatusFilter(value: string | null): value is string {
+function isModeParam(value: string | null): value is Exclude<QuestionMode, "answered"> {
+  return value === "new" || value === "review-errors" || value === "favorites";
+}
+
+function isStatusFilter(value: string | null): value is StatusFilter {
   return value === "unanswered" || value === "answered" || value === "wrong" || value === "favorites";
+}
+
+function modeFromStatus(status: StatusFilter): QuestionMode {
+  if (status === "unanswered") return "new";
+  if (status === "wrong") return "review-errors";
+  if (status === "favorites") return "favorites";
+  return "answered";
 }
 
 function getSearchParam(params: URLSearchParams, key: string, allowedValues: string[]) {
@@ -55,32 +70,32 @@ function getSearchParam(params: URLSearchParams, key: string, allowedValues: str
   return value && allowedValues.includes(value) ? value : "";
 }
 
+function matchesFilterScope(question: SoldadoQuestion, filters: FilterValue) {
+  return (
+    (filters.subject === "" || question.materia === filters.subject) &&
+    (filters.topic === "" || getQuestionTopicFilterValue(question) === filters.topic) &&
+    (filters.board === "" || question.banca === filters.board) &&
+    (filters.year === "" || question.ano === filters.year)
+  );
+}
+
 function filterQuestions(questions: SoldadoQuestion[], filters: FilterValue, progress: SoldadoProgress) {
   return questions.filter((question) => {
     const answer = progress.answers[question.id];
     const favorite = Boolean(progress.favorites[question.id]);
-    const matchesSubject = filters.subject === "" || question.materia === filters.subject;
-    const matchesTopic = filters.topic === "" || getQuestionTopicFilterValue(question) === filters.topic;
-    const matchesBoard = filters.board === "" || question.banca === filters.board;
-    const matchesYear = filters.year === "" || question.ano === filters.year;
-    const matchesStatus =
-      filters.status === "" ||
-      (filters.status === "unanswered" && !answer) ||
-      (filters.status === "answered" && Boolean(answer)) ||
-      (filters.status === "wrong" && Boolean(answer) && !answer.isCorrect) ||
-      (filters.status === "favorites" && favorite);
+    const matchesMode =
+      (filters.mode === "new" && !answer) ||
+      (filters.mode === "answered" && Boolean(answer)) ||
+      (filters.mode === "review-errors" && Boolean(answer) && !answer.isCorrect) ||
+      (filters.mode === "favorites" && favorite);
 
-    return matchesSubject && matchesTopic && matchesBoard && matchesYear && matchesStatus;
+    return matchesFilterScope(question, filters) && matchesMode;
   });
 }
 
-function getModeCopy(status: string) {
-  return (
-    STATUS_COPY[status] ?? {
-      emptyTitle: "Nenhuma questão encontrada com os filtros atuais.",
-      emptyDescription: "Limpe os filtros ou ajuste matéria, banca, ano e status para continuar praticando.",
-    }
-  );
+function getVisibleSelectedAnswer(question: SoldadoQuestion | undefined, progress: SoldadoProgress, mode: QuestionMode): AlternativeKey | null {
+  if (!question || mode === "review-errors") return null;
+  return progress.answers[question.id]?.selectedAnswer ?? null;
 }
 
 export function QuestionPractice({
@@ -96,20 +111,22 @@ export function QuestionPractice({
 }) {
   const [filters, setFilters] = useState<FilterValue>(EMPTY_FILTERS);
   const [progress, setProgress] = useState<SoldadoProgress>(() => getInitialProgress());
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<AlternativeKey | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const loadedProgress = loadProgress();
     const params = new URLSearchParams(window.location.search);
+    const modeParam = params.get("mode");
     const statusParam = params.get("status");
+    const mode = isModeParam(modeParam) ? modeParam : isStatusFilter(statusParam) ? modeFromStatus(statusParam) : "new";
     const nextFilters = {
+      mode,
       subject: getSearchParam(params, "materia", subjects),
       topic: "",
       board: getSearchParam(params, "banca", boards),
       year: getSearchParam(params, "ano", years),
-      status: isStatusFilter(statusParam) ? statusParam : "",
     };
     const topicParam = params.get("topico");
     const topicOptions = getOfficialTopicsForSubject(nextFilters.subject);
@@ -123,24 +140,31 @@ export function QuestionPractice({
 
     setProgress(loadedProgress);
     setFilters(nextFilters);
-    setCurrentIndex(nextIndex);
-    setSelectedAnswer(nextQuestion ? loadedProgress.answers[nextQuestion.id]?.selectedAnswer ?? null : null);
+    setCurrentQuestionId(nextQuestion?.id ?? null);
+    setSelectedAnswer(getVisibleSelectedAnswer(nextQuestion, loadedProgress, nextFilters.mode));
     setReady(true);
   }, [boards, questions, subjects, years]);
 
   const filteredQuestions = useMemo(() => filterQuestions(questions, filters, progress), [filters, progress, questions]);
   const topicOptions = useMemo(() => getOfficialTopicsForSubject(filters.subject), [filters.subject]);
-  const currentQuestion = filteredQuestions[currentIndex];
-  const hasActiveFilters = Boolean(filters.subject || filters.topic || filters.board || filters.year || filters.status);
-  const modeCopy = getModeCopy(filters.status);
+  const currentQuestion = useMemo(
+    () => questions.find((question) => question.id === currentQuestionId && matchesFilterScope(question, filters)),
+    [currentQuestionId, filters, questions]
+  );
+  const currentIndex = currentQuestion ? filteredQuestions.findIndex((question) => question.id === currentQuestion.id) : -1;
+  const currentQuestionIsInQueue = currentIndex >= 0;
+  const displayIndex = currentQuestionIsInQueue ? currentIndex : 0;
+  const displayTotal = filteredQuestions.length + (currentQuestion && !currentQuestionIsInQueue ? 1 : 0);
+  const hasActiveFilters = Boolean(filters.subject || filters.topic || filters.board || filters.year);
+  const modeCopy = MODE_COPY[filters.mode];
   const emptyTitle = filters.topic ? "Nenhuma questão encontrada para este tópico com os filtros atuais." : modeCopy.emptyTitle;
   const emptyDescription = filters.topic
-    ? "Limpe o tópico ou ajuste matéria, banca, ano e status para continuar estudando."
+    ? "Limpe o tópico ou ajuste matéria, banca, ano e modo para continuar estudando."
     : modeCopy.emptyDescription;
 
   useEffect(() => {
     if (!ready || !currentQuestion) return;
-    setSelectedAnswer(progress.answers[currentQuestion.id]?.selectedAnswer ?? null);
+    setSelectedAnswer(getVisibleSelectedAnswer(currentQuestion, progress, filters.mode));
     const nextProgress = setLastQuestion(currentQuestion.id);
     setProgress(nextProgress);
   }, [currentQuestion?.id, ready]);
@@ -148,11 +172,12 @@ export function QuestionPractice({
   function updateUrl(nextFilters: FilterValue) {
     if (typeof window === "undefined") return;
     const nextUrl = buildQuestionsUrl({
+      mode: nextFilters.mode === "answered" ? undefined : nextFilters.mode,
       materia: nextFilters.subject,
       topico: nextFilters.topic,
       banca: nextFilters.board,
       ano: nextFilters.year,
-      status: nextFilters.status,
+      status: nextFilters.mode === "answered" ? "answered" : undefined,
     });
     window.history.replaceState(null, "", nextUrl);
   }
@@ -160,9 +185,10 @@ export function QuestionPractice({
   function handleFilterChange(nextFilters: FilterValue) {
     setFilters(nextFilters);
     updateUrl(nextFilters);
-    setCurrentIndex(0);
     const nextQuestions = filterQuestions(questions, nextFilters, progress);
-    setSelectedAnswer(nextQuestions[0] ? progress.answers[nextQuestions[0].id]?.selectedAnswer ?? null : null);
+    const nextQuestion = nextQuestions[0];
+    setCurrentQuestionId(nextQuestion?.id ?? null);
+    setSelectedAnswer(getVisibleSelectedAnswer(nextQuestion, progress, nextFilters.mode));
   }
 
   function clearFilters() {
@@ -171,16 +197,17 @@ export function QuestionPractice({
 
   function continueFromLastQuestion() {
     if (!progress.lastQuestionId) return;
-    const nextIndex = filteredQuestions.findIndex((question) => question.id === progress.lastQuestionId);
-    if (nextIndex >= 0) {
-      goToQuestion(nextIndex);
+    const nextQuestion = filteredQuestions.find((question) => question.id === progress.lastQuestionId);
+    if (nextQuestion) {
+      goToQuestion(nextQuestion.id);
     }
   }
 
-  function goToQuestion(nextIndex: number) {
-    const nextQuestion = filteredQuestions[nextIndex];
-    setCurrentIndex(nextIndex);
-    setSelectedAnswer(nextQuestion ? progress.answers[nextQuestion.id]?.selectedAnswer ?? null : null);
+  function goToQuestion(questionId: string) {
+    const nextQuestion = questions.find((question) => question.id === questionId);
+    if (!nextQuestion) return;
+    setCurrentQuestionId(nextQuestion.id);
+    setSelectedAnswer(getVisibleSelectedAnswer(nextQuestion, progress, filters.mode));
   }
 
   function handleAnswer(answer: AlternativeKey) {
@@ -199,6 +226,14 @@ export function QuestionPractice({
     Boolean(progress.lastQuestionId) &&
     filteredQuestions.some((question) => question.id === progress.lastQuestionId) &&
     currentQuestion?.id !== progress.lastQuestionId;
+  const canGoPrevious = filters.mode !== "new" && currentIndex > 0;
+  const nextQuestion =
+    filters.mode === "new" && !currentQuestionIsInQueue
+      ? filteredQuestions[0]
+      : currentQuestionIsInQueue
+        ? filteredQuestions[currentIndex + 1]
+        : filteredQuestions[0];
+  const canGoNext = Boolean(nextQuestion);
 
   return (
     <main style={{ background: "#f8faff", minHeight: "100vh" }}>
@@ -230,19 +265,27 @@ export function QuestionPractice({
             <>
               <QuestionCard
                 question={currentQuestion}
-                currentIndex={currentIndex}
-                total={filteredQuestions.length}
+                currentIndex={displayIndex}
+                total={displayTotal}
                 selectedAnswer={selectedAnswer}
                 isFavorite={Boolean(progress.favorites[currentQuestion.id])}
                 onSelectAnswer={handleAnswer}
                 onToggleFavorite={handleToggleFavorite}
               />
               <QuestionNavigator
-                currentIndex={currentIndex}
-                total={filteredQuestions.length}
+                currentIndex={displayIndex}
+                total={displayTotal}
+                showPrevious={filters.mode !== "new"}
+                canGoPrevious={canGoPrevious}
+                canGoNext={canGoNext}
                 hasAnswered={selectedAnswer !== null}
-                onPrevious={() => goToQuestion(Math.max(0, currentIndex - 1))}
-                onNext={() => goToQuestion(Math.min(filteredQuestions.length - 1, currentIndex + 1))}
+                onPrevious={() => {
+                  const previousQuestion = filteredQuestions[currentIndex - 1];
+                  if (previousQuestion) goToQuestion(previousQuestion.id);
+                }}
+                onNext={() => {
+                  if (nextQuestion) goToQuestion(nextQuestion.id);
+                }}
               />
             </>
           ) : (
@@ -263,17 +306,32 @@ export function QuestionPractice({
                 {emptyDescription}
               </p>
               <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-                <button type="button" onClick={clearFilters} style={primaryButtonStyle}>
-                  Ver todas as questões
-                </button>
-                {filters.topic && (
-                  <button type="button" onClick={() => handleFilterChange({ ...filters, topic: "" })} style={secondaryButtonStyle}>
-                    Limpar tópico
-                  </button>
+                {filters.mode === "new" && (
+                  <>
+                    <button type="button" onClick={() => handleFilterChange({ ...filters, mode: "review-errors" })} style={primaryButtonStyle}>
+                      Revisar erros
+                    </button>
+                    <button type="button" onClick={() => handleFilterChange({ ...filters, mode: "favorites" })} style={secondaryButtonStyle}>
+                      Ver favoritas
+                    </button>
+                    <Link href="/progresso" style={secondaryLinkStyle}>
+                      Ir para Progresso
+                    </Link>
+                  </>
                 )}
-                {filters.status && !filters.topic && (
-                  <button type="button" onClick={() => handleFilterChange({ ...filters, status: "" })} style={secondaryButtonStyle}>
-                    Limpar status
+                {filters.mode !== "new" && (
+                  <>
+                    <button type="button" onClick={() => handleFilterChange({ ...filters, mode: "new" })} style={primaryButtonStyle}>
+                      Continuar questões novas
+                    </button>
+                    <Link href="/progresso" style={secondaryLinkStyle}>
+                      Ver progresso
+                    </Link>
+                  </>
+                )}
+                {(hasActiveFilters || filters.topic) && (
+                  <button type="button" onClick={clearFilters} style={secondaryButtonStyle}>
+                    Limpar filtros
                   </button>
                 )}
               </div>
@@ -327,4 +385,12 @@ const primaryButtonStyle: React.CSSProperties = {
   fontSize: 14,
   fontWeight: 800,
   cursor: "pointer",
+};
+
+const secondaryLinkStyle: React.CSSProperties = {
+  ...secondaryButtonStyle,
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textDecoration: "none",
 };

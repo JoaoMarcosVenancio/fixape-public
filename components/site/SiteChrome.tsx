@@ -7,7 +7,7 @@ const linkStyle: React.CSSProperties = {
   transition: "color 0.18s ease",
 };
 
-export function SiteHeader() {
+export function SiteHeader({ showQuestionsCta = true }: { showQuestionsCta?: boolean }) {
   return (
     <nav
       style={{
@@ -65,23 +65,25 @@ export function SiteHeader() {
           <Link href="/progresso" style={linkStyle}>
             Progresso
           </Link>
-          <Link
-            className="site-header-cta"
-            href="/questoes"
-            style={{
-              fontSize: 14,
-              fontWeight: 700,
-              color: "#fff",
-              background: "linear-gradient(135deg,#2563eb,#3b82f6)",
-              padding: "9px 18px",
-              borderRadius: 980,
-              textDecoration: "none",
-              boxShadow: "0 8px 20px rgba(37,99,235,0.24)",
-              transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
-            }}
-          >
-            Come&ccedil;ar quest&otilde;es
-          </Link>
+          {showQuestionsCta && (
+            <Link
+              className="site-header-cta"
+              href="/questoes"
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: "#fff",
+                background: "linear-gradient(135deg,#2563eb,#3b82f6)",
+                padding: "9px 18px",
+                borderRadius: 980,
+                textDecoration: "none",
+                boxShadow: "0 8px 20px rgba(37,99,235,0.24)",
+                transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
+              }}
+            >
+              Come&ccedil;ar quest&otilde;es
+            </Link>
+          )}
         </div>
       </div>
       <style>{`
@@ -112,10 +114,9 @@ export function SiteHeader() {
             gap: 12px !important;
           }
           .site-header-links {
-            gap: 0 !important;
+            gap: 12px !important;
             flex-wrap: nowrap !important;
           }
-          .site-header-blog,
           .site-header-cta {
             display: none !important;
           }
@@ -188,10 +189,10 @@ export function SiteFooter() {
   );
 }
 
-export function StaticPageShell({ children }: { children: React.ReactNode }) {
+export function StaticPageShell({ children, showQuestionsCta = true }: { children: React.ReactNode; showQuestionsCta?: boolean }) {
   return (
     <div style={{ background: "#fff", minHeight: "100vh" }}>
-      <SiteHeader />
+      <SiteHeader showQuestionsCta={showQuestionsCta} />
       {children}
       <SiteFooter />
     </div>
